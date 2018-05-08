@@ -1,0 +1,6 @@
+C:/Users/Gebruiker/Documents/Build-environment/modules/DISTANCE/build/CMakeFiles/arduino-template.bin.dir
+C:/Users/Gebruiker/Documents/Build-environment/modules/DISTANCE/build/CMakeFiles/arduino-template.elf.dir
+C:/Users/Gebruiker/Documents/Build-environment/modules/DISTANCE/build/CMakeFiles/arduino-template.hex.dir
+C:/Users/Gebruiker/Documents/Build-environment/modules/DISTANCE/build/CMakeFiles/flash.dir
+C:/Users/Gebruiker/Documents/Build-environment/modules/DISTANCE/build/CMakeFiles/edit_cache.dir
+C:/Users/Gebruiker/Documents/Build-environment/modules/DISTANCE/build/CMakeFiles/rebuild_cache.dir
