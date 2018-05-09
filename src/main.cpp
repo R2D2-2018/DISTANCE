@@ -5,20 +5,13 @@
 
 int main() {
     WDT->WDT_MR = WDT_MR_WDDIS;
+    namespace target = hwlib::target;
+
+   // auto TX1 = target::pin_oc(target::pins::d18);
+    auto RX1 = target::pin_in(target::pins::d19);
 
     hwlib::wait_ms(1000);
-    hwlib::cout << "Hello world!" << hwlib::endl;
-
-    auto pin = hwlib::target::pin_out(hwlib::target::pins::d19);
-
-    LIDARmini lidar(pin);
-    lidar.doSomething(50);
-
-    UARTprotocol uart(50);
-    uart.func();
-
-    Filter filt(50);
-    filt.func();
     
-    return 0;
+    UARTprotocol UARTprotocol(RX1);
+
 }

@@ -1,6 +1,6 @@
 #include "LIDARmini.hpp"
 
-LIDARmini::LIDARmini(hwlib::target::pin_out pin):
+LIDARmini::LIDARmini(hwlib::target::pin_in pin):
     pin(pin)
 {}
     

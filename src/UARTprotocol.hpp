@@ -4,10 +4,14 @@
 
 class UARTprotocol {
     private:
-        int value;
+        hwlib::target::pin_in RX1;
     public:
-        UARTprotocol(int value);
+        UARTprotocol(hwlib::target::pin_in RX1);
 
-        void func();
+        int ReadByte();
+
+        bool WaitForStartByte();
+
+        bool IsStartBit(int number);
 };
 #endif //x

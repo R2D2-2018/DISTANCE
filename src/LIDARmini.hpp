@@ -11,13 +11,13 @@
  */
 class LIDARmini {
 private:
-    hwlib::target::pin_out pin;
+    hwlib::target::pin_in pin;
 public:
 
     /**
      * @brief Constructor
      */
-    LIDARmini(hwlib::target::pin_out pin);
+    LIDARmini(hwlib::target::pin_in pin);
 
     void doSomething(int x);
    
