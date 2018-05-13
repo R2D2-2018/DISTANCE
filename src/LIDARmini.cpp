@@ -1,11 +1,15 @@
 #include "LIDARmini.hpp"
 
-LIDARmini::LIDARmini(hwlib::target::pin_in pin):
-    pin(pin)
+LIDARmini::LIDARmini(hwlib::target::pin_in RX):
+    RX(RX)
 {}
-    
-    
-void LIDARmini::doSomething(int x) {
-    hwlib::cout << "Do something: " << x << hwlib::endl;
-    hwlib::wait_ms(1000);
+      
+int LIDARmini::GetDistanceInCM() {
+    int distance[8];
+    UARTprotocol UARTprotocol(RX); //needs to be moved
+    UARTprotocol.WaitForStartByte(59);
+    for(int i = 0; i < 8; i++){
+        distance[i] = UARTprotocol.ReadByte();
+    }
+    return distance[0];//temporarily
 }
