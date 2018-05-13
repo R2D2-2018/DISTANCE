@@ -3,12 +3,10 @@
 #include "wrap-hwlib.hpp"
 
 class Filter {
-    private:
-        int value;
     public:
-        Filter(int value);
+        //Filter();
 
-        void func();
+        int MadainFilterEightBytes(int bytes[8]);
 };
 
 #endif //x
