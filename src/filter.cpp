@@ -1,7 +1,5 @@
 #include "filter.hpp"
 
-//Filter::Filter();
-
 int Filter::MadainFilterEightBytes(int bytes[8]) {
     int preByte = 0;
     int totalByte = 0;
