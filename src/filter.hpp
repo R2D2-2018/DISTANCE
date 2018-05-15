@@ -12,7 +12,8 @@
 class Filter {
     public:
 
-        int MadainFilterEightBytes(int bytes[8]);
+        int MadainFilterEightBytes(int bytes[8]);//we made the choice to use 8 because 
+        //that was what we found enough for a good medain and is still fast enough
 };
 
 #endif //x
