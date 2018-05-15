@@ -1,5 +1,5 @@
-#ifndef filter_hpp
-#define filter_hpp
+#ifndef FILTER_HPP
+#define FILTER_HPP
 #include "wrap-hwlib.hpp"
 
 /**
@@ -12,8 +12,17 @@
 class Filter {
     public:
 
-        int MadainFilterEightBytes(int bytes[8]);//we made the choice to use 8 because 
-        //that was what we found enough for a good medain and is still fast enough
+        /**
+         * @brief 
+         * Returns the median value
+         * 
+         * @description 
+         * Determines the median value of a given array of integers
+         * 
+         * @return 
+         * int : the median value
+         */  
+        int getMedian(int a[], int size);
 };
 
-#endif //x
+#endif //FILTER_HPP

@@ -1,16 +1,18 @@
 #include "filter.hpp"
 
-enum Enumfilter {
-    amoundOfBytes = 8//we made the choice to use 8 because 
-    //that was what we found enough for a good medain and is still fast enough
-};
+//TODO: Change to use C++ array
+int Filter::getMedian(int list[], int length)
+{    
+    int i = 1;	
+    //TODO: Change to use for loop instead of while
+    while ( i < length ) {
+		for (int j = i; list[j - 1] > list[j]; j-- ) {
+			int temp = list[j];
+			list[j] = list[j - 1];
+			list[j - 1] = temp;
+		}
+		i++;
+	}
 
-int Filter::MadainFilterEightBytes(int bytes[amoundOfBytes]) {
-    int preByte = 0;
-    int totalByte = 0;
-    for(int i = 0; i < amoundOfBytes; i++){
-            totalByte = preByte + bytes[i];
-            preByte = bytes[i];
-    }
-    return totalByte / amoundOfBytes;
+    return length % 2 ? list[length / 2] : (list[length / 2 - 1] + list[length / 2]) / 2;
 }

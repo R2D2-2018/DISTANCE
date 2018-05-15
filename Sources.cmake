@@ -28,7 +28,7 @@ set (sources
     src/wrap-hwlib.cpp
     src/libc-stub.cpp
     src/main.cpp
-    src/LIDARmini.cpp
+    src/lidar_mini.cpp
     src/filter.cpp
-    src/UARTprotocol.cpp
+    src/uart_protocol.cpp
 )

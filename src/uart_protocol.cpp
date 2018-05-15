@@ -1,4 +1,4 @@
-#include "UARTprotocol.hpp"
+#include "uart_protocol.hpp"
 
 UARTprotocol::UARTprotocol(hwlib::target::pin_in RX): 
     RX(RX)
