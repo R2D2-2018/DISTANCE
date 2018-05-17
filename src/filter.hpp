@@ -3,7 +3,7 @@
 #include "wrap-hwlib.hpp"
 
 /**
- * @class Filter.h
+ * @class Filter
  * @author Wouter Dijkstra and Kiet van Osnabrugge
  * @date 9-5-2018
  * @file Filter.hpp

@@ -1,12 +1,12 @@
-#ifndef UARTprotocol_hpp
-#define UARTprotocol_hpp
+#ifndef UART_PROTOCOL_HPP
+#define UART_PROTOCOL_HPP
 #include "wrap-hwlib.hpp"
 
 /**
- * @class UARTprotocol.h
+ * @class UARTprotocol
  * @author Wouter Dijkstra and Kiet van Osnabrugge
  * @date 9-5-2018
- * @file UARTprotocol.hpp
+ * @file uart_protocol.hpp
  * @brief Class that can be used to use the UARTprotocol
  */
 class UARTprotocol {

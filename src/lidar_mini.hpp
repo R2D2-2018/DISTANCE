@@ -4,10 +4,10 @@
 #include "uart_protocol.hpp"
 
 /**
- * @class LIDARmini.h
+ * @class LIDARmini
  * @author Wouter Dijkstra and Kiet van Osnabrugge
  * @date 8-5-2018
- * @file LIDARmini.hpp
+ * @file lidar_mini.hpp
  * @brief Class for the TF LIDAR Mini
  */
 class LIDARmini {
