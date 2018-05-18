@@ -2,7 +2,7 @@
 #define LIDAR_MINI_HPP
 #include "wrap-hwlib.hpp"
 #include "uart_protocol.hpp"
-
+#include <array>
 /**
  * @class LIDARmini
  * @author Wouter Dijkstra and Kiet van Osnabrugge
@@ -20,6 +20,8 @@ public:
      */
     LIDARmini(hwlib::target::pin_in RX);
 
+    std::array<char, 7> bytes;
+
     /**
      * @brief 
      * Returns the distance in cm
@@ -30,7 +32,7 @@ public:
      * @return 
      * int : the distance in cm
      */  
-    int GetDistanceInCM();
+    char * getDistance();
    
 };
 

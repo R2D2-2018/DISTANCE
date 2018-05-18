@@ -1,20 +1,20 @@
 #include "lidar_mini.hpp"
+#include "uart_protocol.hpp"
 
-enum LiDarminiEnum{
-    startByte = 59,
-    dataPackageSize = 8
-};
 
 LIDARmini::LIDARmini(hwlib::target::pin_in RX):
     RX(RX)
 {}
-      
-int LIDARmini::GetDistanceInCM() {
-    int distance[dataPackageSize];
-    UARTprotocol UARTprotocol(RX); //needs to be moved
-    UARTprotocol.WaitForStartByte(startByte);
-    for(int i = 0; i < dataPackageSize; i++){
-        distance[i] = UARTprotocol.ReadByte();
+
+char * LIDARmini::getDistance() 
+{
+    UARTprotocol uart(RX, 1000);
+
+    uart.waitForStart();
+ 
+    for (int i = 0; i < 8; ++i) {          
+         bytes[i] = uart.getByte();
     }
-    return distance[0];//temporarily
+
+    return bytes.begin();
 }
