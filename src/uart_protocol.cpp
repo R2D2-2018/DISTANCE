@@ -8,6 +8,11 @@
  * @license   MIT
  */
 
+enum uartEnum {
+    startByte = 59,
+    sizeDataPackage = 8
+};
+
 UARTProtocol::UARTProtocol(hwlib::target::pin_in& RX, int waitStartByteCycles):
     RX(RX),
     waitStartByteCycles(waitStartByteCycles)
@@ -17,9 +22,9 @@ UARTProtocol::UARTProtocol(hwlib::target::pin_in& RX, int waitStartByteCycles):
 char UARTProtocol::getByte()
 {
     int result = 0;
-    for (int i = 0; i < 8; ++i)
+    for (int i = 0; i < 8; ++i) // 8 is size of a byte
     {
-        result *= 2;
+        result *= 2; // 2 to make the binary number one digit bigger
         result += RX.get();
     }
     return result;
@@ -33,13 +38,13 @@ bool UARTProtocol::waitForStart()
     {
         buffer <<= 1;
         buffer = buffer | RX.get();
-        if (buffer == 59)
+        if (buffer == startByte)
         {
-            for (int i = 0; i < 8; ++i)
+            for (int i = 0; i < sizeDataPackage; ++i)
             {
                 buffer = buffer | RX.get();
             }
-            if (buffer == 59)
+            if (buffer == startByte)
             {
                 return true;
             }
