@@ -16,22 +16,21 @@ class UARTprotocol {
         UARTprotocol(hwlib::target::pin_in& RX, int waitStartByteCycles);
 
         /**
-    	* @brief gets a bite form the RX pin
+    	* @brief gets a byte form the RX pin
         *
-        * This function gets a bite a bit at a time form the RX pin.
+        * This function gets a byte one bit at a time from the RX pin.
         *
         * @return 
-        * Char : result a byte
+        * char : returns a char (which corrosponds to a byte)
         */
         char getByte();
 
         /**
-        * @brief Short description of foo
-        * [BLANK]
-        * description of foo
-        * [BLANK]
-        * @param[in]     a    What is the input for the function
-        * @return What will the function return
+        * @brief Waits until the start byte is found
+        * 
+        * This function loops until two start bytes have been found or until a specified amount of tries has been reached.
+        * 
+        * @returns boolean value
         */
         bool waitForStart();
     };
