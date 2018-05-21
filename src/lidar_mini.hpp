@@ -3,11 +3,17 @@
 #include "wrap-hwlib.hpp"
 #include "uart_protocol.hpp"
 #include <array>
+
+/**
+ * @file      lidar_mini.hpp
+ * @brief     Hpp file for the class LIDARmini which will contain functions to control the TF LIDAR mini sensor
+ * @author    Wouter Dijksta and Kiet van Osnabrugge
+ * @date      21-5-2018
+ * @license   MIT
+ */
+
 /**
  * @class LIDARmini
- * @author Wouter Dijkstra and Kiet van Osnabrugge
- * @date 8-5-2018
- * @file lidar_mini.hpp
  * @brief Class for the TF LIDAR Mini
  */
 class LIDARmini {

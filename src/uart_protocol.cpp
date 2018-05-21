@@ -1,13 +1,20 @@
 #include "uart_protocol.hpp"
 
+/**
+ * @file      uart_protocol.cpp
+ * @brief     Cpp file for the class UARTProtocol which will contain functions use a UARTProtocol which is needed for the LIDARmini class.
+ * @author    Wouter Dijksta and Kiet van Osnabrugge
+ * @date      21-5-2018
+ * @license   MIT
+ */
 
-UARTprotocol::UARTprotocol(hwlib::target::pin_in& RX, int waitStartByteCycles):
+UARTProtocol::UARTProtocol(hwlib::target::pin_in& RX, int waitStartByteCycles):
     RX(RX),
     waitStartByteCycles(waitStartByteCycles)
 {}
 
 
-char UARTprotocol::getByte()
+char UARTProtocol::getByte()
 {
     int result = 0;
     for (int i = 0; i < 8; ++i)
@@ -19,7 +26,7 @@ char UARTprotocol::getByte()
 }
 
 
-bool UARTprotocol::waitForStart()
+bool UARTProtocol::waitForStart()
 {
     char buffer = 0;
     for (int t = 0; t < waitStartByteCycles; ++t)

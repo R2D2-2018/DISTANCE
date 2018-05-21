@@ -1,5 +1,13 @@
 #include "filter.hpp"
 
+/**
+ * @file      filter.cpp
+ * @brief     Cpp file for the class filter which will contain differnet filters
+ * @author    Wouter Dijksta and Kiet van Osnabrugge
+ * @date      21-5-2018
+ * @license   MIT
+ */
+
 //TODO: Change to use C++ array
 int Filter::getMedian(int list[], int length)
 {    

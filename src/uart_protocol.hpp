@@ -1,19 +1,25 @@
 #ifndef LIDAR_HPP
 #define LIDAR_HPP
 #include "wrap-hwlib.hpp"
+
 /**
- * @class UARTprotocol
- * @author Wouter Dijkstra and Kiet van Osnabrugge
- * @date 8-5-2018
- * @file UARTprotocl.hpp
+ * @file      uart_protocol.cpp
+ * @brief     Hpp file for the class UARTProtocol which will contain functions use a UARTProtocol which is needed for the LIDARmini class.
+ * @author    Wouter Dijksta and Kiet van Osnabrugge
+ * @date      21-5-2018
+ * @license   MIT
+ */
+
+/**
+ * @class UARTProtocol
  * @brief This class will contain functions for other classes to use the uart protocol.
  */
-class UARTprotocol {
+class UARTProtocol {
     public:
         hwlib::target::pin_in& RX;
         int waitStartByteCycles;
 
-        UARTprotocol(hwlib::target::pin_in& RX, int waitStartByteCycles);
+        UARTProtocol(hwlib::target::pin_in& RX, int waitStartByteCycles);
 
         /**
     	* @brief gets a byte form the RX pin
