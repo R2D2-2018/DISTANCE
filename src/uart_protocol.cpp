@@ -38,6 +38,6 @@ bool UARTprotocol::waitForStart()
             }
         }
     }
-    hwlib::cout << "Tried " << waitStartByteCycles << " times." << hwlib::endl;
+    //hwlib::cout << "Tried " << waitStartByteCycles << " times." << hwlib::endl;
     return false;
 }

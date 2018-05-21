@@ -10,7 +10,7 @@ char * LIDARmini::getDistance()
 {
     UARTprotocol uart(RX, 1000);
 
-    uart.waitForStart();
+    //uart.waitForStart();
  
     for (int i = 0; i < 8; ++i) {          
          bytes[i] = uart.getByte();

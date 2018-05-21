@@ -27,10 +27,11 @@ public:
      * Returns the distance in cm
      * 
      * @description 
-     * Calculates the distance with the uart protocol of the data that comes in over the RX port in cm
+     * Calculates the distance with the uart protocol of the data that comes in over the RX port in cm.
+     * Right now it returns the full package.
      * 
      * @return 
-     * int : the distance in cm
+     * char * : to the first element of the data package
      */  
     char * getDistance();
    
