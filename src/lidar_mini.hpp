@@ -39,7 +39,7 @@ public:
      * @return 
      * char * : to the first element of the data package
      */  
-    char * getDistance();
+    char * getDistanceInCm();
    
 };
 

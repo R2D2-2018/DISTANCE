@@ -13,11 +13,9 @@ LIDARmini::LIDARmini(hwlib::target::pin_in RX):
     RX(RX)
 {}
 
-char * LIDARmini::getDistance() 
+char * LIDARmini::getDistanceInCm() 
 {
     UARTProtocol uart(RX, 1000);
-
-    //uart.waitForStart();
  
     for (int i = 0; i < 8; ++i) {          
          bytes[i] = uart.getByte();
