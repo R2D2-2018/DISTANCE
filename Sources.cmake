@@ -31,4 +31,5 @@ set (sources
     src/lidar_mini.cpp
     src/filter.cpp
     src/uart_protocol.cpp
+    src/uart_connection.cpp
 )
