@@ -13,7 +13,7 @@ enum uartEnum {
     sizeDataPackage = 8
 };
 
-UARTProtocol::UARTProtocol(hwlib::target::pin_in& RX, int waitStartByteCycles):
+UARTProtocol::UARTProtocol(hwlib::pin_in& RX, int waitStartByteCycles):
     RX(RX),
     waitStartByteCycles(waitStartByteCycles)
 {}

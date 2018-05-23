@@ -13,7 +13,7 @@ int main() {
     
     LIDARmini lidar(RX1);
 
-    lidar.getDistanceInCm();
-
-    
+    while(1){
+        lidar.printByte(lidar.getDistanceInCm('Y'));
+    }
 }

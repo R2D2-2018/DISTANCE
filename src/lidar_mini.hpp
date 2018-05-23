@@ -2,6 +2,7 @@
 #define LIDAR_MINI_HPP
 #include "wrap-hwlib.hpp"
 #include "uart_protocol.hpp"
+#include "uart_connection.hpp"
 #include <array>
 
 /**
@@ -18,15 +19,19 @@
  */
 class LIDARmini {
 private:
-    hwlib::target::pin_in RX;
+    hwlib::pin_in& RX;
 public:
 
     /**
      * @brief Constructor
      */
-    LIDARmini(hwlib::target::pin_in RX);
+    LIDARmini(hwlib::pin_in& RX);
 
     std::array<char, 7> bytes;
+
+    bool compairBytes(char byte1, char byte2);
+
+    bool waitForStartByte(char startByte, int StartByteCycles);
 
     /**
      * @brief 
@@ -39,7 +44,9 @@ public:
      * @return 
      * char * : to the first element of the data package
      */  
-    char * getDistanceInCm();
+    char * getDistanceInCm(char startByte);
+
+    void printByte(char byte[]);
    
 };
 

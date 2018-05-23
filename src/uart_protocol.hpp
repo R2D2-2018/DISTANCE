@@ -16,10 +16,10 @@
  */
 class UARTProtocol {
     public:
-        hwlib::target::pin_in& RX;
+        hwlib::pin_in& RX;
         int waitStartByteCycles;
 
-        UARTProtocol(hwlib::target::pin_in& RX, int waitStartByteCycles);
+        UARTProtocol(hwlib::pin_in& RX, int waitStartByteCycles);
 
         /**
     	* @brief gets a byte form the RX pin
