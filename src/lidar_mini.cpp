@@ -8,42 +8,67 @@
  * @license   MIT
  */
 
-LIDARmini::LIDARmini(hwlib::pin_in& RX):
-    RX(RX)
-{}
+LIDARmini::LIDARmini(hwlib::pin_in &RX) : RX(RX) {
+}
 
-bool LIDARmini::compairBytes(char byte1, char byte2){
-    if(byte1 = byte2){
+bool LIDARmini::compairBytes(char byte1, char byte2) {
+    if (byte1 = byte2) {
         return true;
     }
     return false;
 }
 
-bool LIDARmini::waitForStartByte(char startByte, int StartByteCycles){
+bool LIDARmini::waitForStartByte(char startByte, int StartByteCycles) {
     UARTConnection uart(115200, UARTController::ONE, 1);
-    for(int i = 0; i < StartByteCycles; ++i){
+    for (int i = 0; i < StartByteCycles; ++i) {
         char receivedByte = uart.receive();
-        if(compairBytes(receivedByte, startByte)){
+        if (compairBytes(receivedByte, startByte)) {
             return true;
         }
     }
     return false;
 }
 
-char * LIDARmini::getDistanceInCm(char startByte) {
+/*char * LIDARmini::getDistanceInCm(char startByte) {
     UARTConnection uart(115200, UARTController::ONE, 1);//115200 is the bautrate
     char bytes[8] = {};
     if(waitForStartByte(startByte, 18)){  //18 is the size of 2 full data packages
-        for (int i = 0; i < 8; ++i) {          
+        for (int i = 0; i < 8; ++i) {
             bytes[i] = uart.receive();
         }
     }
     return bytes;
+}*/
+
+std::array<char, 7> LIDARmini::getDistanceInCm() {
+    UARTConnection uart(115200, UARTController::ONE, 1);
+    // char bytes[7];
+    std::array<char, 7> bytes;
+    while (1) {
+        if (uart.available() >= 9) { // Atleast 9 bytes need to be available, as our data package in total contains 9 bytes.
+            if (uart.receive() == 0x59 && uart.receive() == 0x59) { // Check if startbyte is available.., twice.
+                for (int i = 0; i < 7; i++) {                       // Loop for 7 more times to print the remaining data package.
+                    char rc = uart.receive();
+                    // hwlib::cout << "Byte " << i << ": " << (int) rc << " ";
+                    bytes[i] = rc;
+                }
+                // Print array
+                hwlib::cout << "array1: " << int(bytes[0]) << " ";
+                /*for (int i = 0; i<7; i++) {
+                    hwlib::cout << "array" << i << ":" << (int) bytes[i] << " ";
+                }
+
+                hwlib::cout << hwlib::endl;
+                hwlib::wait_ms(2500);*/
+                return bytes;
+            }
+        }
+    }
 }
 
-void LIDARmini::printByte(char bytes[8]){
-    for(int i = 0; i < 8; ++i){
-        hwlib::cout<<bytes[i]<<" ";
+void LIDARmini::printByte(char bytes[8]) {
+    for (int i = 0; i < 8; ++i) {
+        hwlib::cout << bytes[i] << " ";
     }
-    hwlib::cout<<hwlib::endl;
+    hwlib::cout << hwlib::endl;
 }
