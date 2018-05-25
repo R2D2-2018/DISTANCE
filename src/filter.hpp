@@ -15,19 +15,18 @@
  * @brief Class that will contain differnt filter methods for sensor data
  */
 class Filter {
-    public:
-
-        /**
-         * @brief 
-         * Returns the median value
-         * 
-         * @description 
-         * Determines the median value of a given array of integers
-         * 
-         * @return 
-         * int : the median value
-         */  
-        int getMedian(int a[], int size);
+  public:
+    /**
+     * @brief
+     * Returns the median value
+     *
+     * @description
+     * Determines the median value of a given array of integers
+     *
+     * @return
+     * int : the median value
+     */
+    int getMedian(int a[], int size);
 };
 
-#endif //FILTER_HPP
+#endif // FILTER_HPP
