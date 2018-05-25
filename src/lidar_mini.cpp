@@ -11,20 +11,18 @@
 LIDARmini::LIDARmini(hwlib::pin_in &RX) : RX(RX) {
 }
 
-bool LIDARmini::waitForStartByte(char startByte) {
-    //
-}
-
 std::array<char, 7> LIDARmini::getSensorData() {
     UARTConnection uart(115200, UARTController::ONE, 1);
-
     std::array<char, 7> bytes;
 
-    while (1) {
-        if (uart.available() >= 9) {
-            if (uart.receive() == 0x59 && uart.receive() == 0x59) { // Check if startbyte is available.., twice.
-                for (int i = 0; i < 7; i++) {                       // Loop for 7 more times to print the remaining data package.
-                    bytes[i] = uart.receive();                      // Fill the bytes array
+    // The 100k value is chosen because if it is lower it does not work, we're not quite sure why.
+    // But we think it might be related to the BAUDrate
+    for (int j = 0; j < 100000; j++) {
+        if (uart.available() >= 9) { // 9 is the amound of bytes of the full data package
+            // Check if startbyte is available.., twice. receive() pops an element of a stack
+            if (uart.receive() == 0x59 && uart.receive() == 0x59) {
+                for (int i = 0; i < 7; i++) {  // Loop for 7 more times to print the remaining data package.
+                    bytes[i] = uart.receive(); // Fill the bytes array
                 }
                 return bytes;
             }

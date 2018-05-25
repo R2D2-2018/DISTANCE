@@ -38,7 +38,7 @@ class LIDARmini {
      * @return
      * bool : true or false
      */
-    bool waitForStartByte(char startByte);
+    bool waitForStartByte();
 
     /**
      * @brief

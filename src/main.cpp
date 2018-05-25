@@ -12,7 +12,13 @@ int main() {
     LIDARmini lidar(RX1);
 
     while (1) {
-        hwlib::wait_ms(500);
-        hwlib::cout << "Distance(CM): " << lidar.getDistance() << hwlib::endl;
+        // hwlib::wait_ms(500);
+        int val = lidar.getDistance();
+
+        hwlib::cout << "Distance(CM): " << val << hwlib::endl;
+
+        if (val == 188) {
+            hwlib::wait_ms(5000);
+        }
     }
 }
