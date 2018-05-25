@@ -1,7 +1,6 @@
 #ifndef LIDAR_MINI_HPP
 #define LIDAR_MINI_HPP
 #include "uart_connection.hpp"
-#include "uart_protocol.hpp"
 #include "wrap-hwlib.hpp"
 #include <array>
 
@@ -25,28 +24,45 @@ class LIDARmini {
     /**
      * @brief Constructor
      */
-    LIDARmini(hwlib::pin_in &RX);
-
-    // std::array<char, 7> bytes;
-
-    bool compairBytes(char byte1, char byte2);
-
-    bool waitForStartByte(char startByte, int StartByteCycles);
+    explicit LIDARmini(hwlib::pin_in &RX);
 
     /**
      * @brief
-     * Returns the distance in cm
+     * wait until the start byte (0x59) has occured twice in a row
      *
      * @description
-     * Calculates the distance with the uart protocol of the data that comes in over the RX port in cm.
-     * Right now it returns the full package.
+     * Loop startByteCycles amount of times to check for start bytes
+     * Returns true if start byte (0x59) has been detected twice.
+     * Returns false if function has looped startByteCycles times without detecting start bytes.
      *
      * @return
-     * char * : to the first element of the data package
+     * bool : true or false
      */
-    std::array<char, 7> getDistanceInCm();
+    bool waitForStartByte(char startByte);
 
-    void printByte(char byte[]);
+    /**
+     * @brief
+     * Returns an array with all the sensor data
+     *
+     * @description
+     * Returns the full data package, 7 bytes as an array
+     *
+     * @return
+     * std::array : sensor data package
+     */
+    std::array<char, 7> getSensorData();
+
+    /**
+     * @brief
+     * Get distance in centimers
+     *
+     * @description
+     * Returns the distance to an object in centimeters
+     *
+     * @return
+     * int : distance value
+     */
+    int getDistance();
 };
 
 #endif // LIDAR_MINI_HPP
