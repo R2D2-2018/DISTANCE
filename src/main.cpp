@@ -7,18 +7,4 @@ int main() {
     namespace target = hwlib::target;
 
     hwlib::wait_ms(1000);
-
-    auto RX1 = target::pin_in(target::pins::d19);
-    LIDARmini lidar(RX1);
-
-    while (1) {
-        // hwlib::wait_ms(500);
-        int val = lidar.getDistance();
-
-        hwlib::cout << "Distance(CM): " << val << hwlib::endl;
-
-        if (val == 188) {
-            hwlib::wait_ms(5000);
-        }
-    }
 }

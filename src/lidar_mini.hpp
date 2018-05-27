@@ -18,37 +18,26 @@
  */
 class LIDARmini {
   private:
-    hwlib::pin_in &RX;
+    UARTConnection uart;
 
   public:
     /**
      * @brief Constructor
      */
-    explicit LIDARmini(hwlib::pin_in &RX);
-
-    /**
-     * @brief
-     * wait until the start byte (0x59) has occured twice in a row
-     *
-     * @description
-     * Loop startByteCycles amount of times to check for start bytes
-     * Returns true if start byte (0x59) has been detected twice.
-     * Returns false if function has looped startByteCycles times without detecting start bytes.
-     *
-     * @return
-     * bool : true or false
-     */
-    bool waitForStartByte();
+    explicit LIDARmini();
 
     /**
      * @brief
      * Returns an array with all the sensor data
      *
      * @description
-     * Returns the full data package, 7 bytes as an array
+     * If the two startbytes are found returns the data package minus the 2 startbytes, 7 bytes as an array.
+     * If no startbytes are found with in a set amound of try's (100000) an empty array will be returned.
+     * The amound of try's has been determent by tests and 100000 works correctly. We suspect the reason why the amound is so high
+     * is because of the function needing to get in sick with the baudrate.
      *
      * @return
-     * std::array : sensor data package
+     * std::array : bytes
      */
     std::array<char, 7> getSensorData();
 

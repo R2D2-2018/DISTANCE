@@ -8,12 +8,11 @@
  * @license   MIT
  */
 
-LIDARmini::LIDARmini(hwlib::pin_in &RX) : RX(RX) {
+LIDARmini::LIDARmini() : uart(115200, UARTController::ONE, 1) {
 }
 
 std::array<char, 7> LIDARmini::getSensorData() {
-    UARTConnection uart(115200, UARTController::ONE, 1);
-    std::array<char, 7> bytes;
+    std::array<char, 7> bytes = {};
 
     // The 100k value is chosen because if it is lower it does not work, we're not quite sure why.
     // But we think it might be related to the BAUDrate
@@ -28,6 +27,7 @@ std::array<char, 7> LIDARmini::getSensorData() {
             }
         }
     }
+    return bytes;
 }
 
 int LIDARmini::getDistance() {
