@@ -4,7 +4,7 @@
 
 /**
  * @file      filter.hpp
- * @brief     Hpp file for the class filter which will contain differnet filters
+ * @brief     Hpp file for the class filter which will contain different filters
  * @author    Wouter Dijksta and Kiet van Osnabrugge
  * @date      21-5-2018
  * @license   MIT
