@@ -1,5 +1,4 @@
 #include "lidar_mini.hpp"
-#include "uart_protocol.hpp"
 
 /**
  * @file      lidar_mini.cpp
@@ -9,6 +8,7 @@
  * @license   MIT
  */
 
+<<<<<<< HEAD
 LIDARmini::LIDARmini(hwlib::target::pin_in RX) : RX(RX) {
 }
 
@@ -18,6 +18,31 @@ char *LIDARmini::getDistanceInCm() {
     for (int i = 0; i < 8; ++i) {
         bytes[i] = uart.getByte();
     }
+=======
+LIDARmini::LIDARmini() : uart(115200, UARTController::ONE, 1) {
+}
 
-    return bytes.begin();
+std::array<char, 7> LIDARmini::getSensorData() {
+    std::array<char, 7> bytes = {};
+>>>>>>> feature-Use_uart_Lib
+
+    // The 100k value is chosen because if it is lower it does not work, we're not quite sure why.
+    // But we think it might be related to the BAUDrate
+    for (int j = 0; j < 100000; j++) {
+        if (uart.available() >= 9) { // 9 is the amound of bytes of the full data package
+            // Check if startbyte is available.., twice. receive() pops an element of a stack
+            if (uart.receive() == 0x59 && uart.receive() == 0x59) {
+                for (int i = 0; i < 7; i++) {  // Loop for 7 more times to print the remaining data package.
+                    bytes[i] = uart.receive(); // Fill the bytes array
+                }
+                return bytes;
+            }
+        }
+    }
+    return bytes;
+}
+
+int LIDARmini::getDistance() {
+    std::array<char, 7> data = this->getSensorData();
+    return static_cast<int>(data[0]);
 }
