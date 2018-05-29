@@ -9,7 +9,7 @@
  * @license   MIT
  */
 
-LIDARmini::LIDARmini(hwlib::target::pin_in RX) : RX(RX) {
+LIDARmini::LIDARmini(hwlib::pin_in &RX) : RX(RX) {
 }
 
 char *LIDARmini::getDistanceInCm() {

@@ -17,10 +17,10 @@
  */
 class UARTProtocol {
   public:
-    hwlib::target::pin_in &RX; // RX is a pin on the arduino if you didn't know :D
+    hwlib::pin_in &RX; // RX is a pin on the arduino if you didn't know :D
     int waitStartByteCycles;
 
-    UARTProtocol(hwlib::target::pin_in &RX, int waitStartByteCycles);
+    UARTProtocol(hwlib::pin_in &RX, int waitStartByteCycles);
 
     /**
      * @brief gets a byte form the RX pin

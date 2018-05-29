@@ -11,7 +11,7 @@
 
 enum class uartEnum { startByte = 59, sizeDataPackage = 8 };
 
-UARTProtocol::UARTProtocol(hwlib::target::pin_in &RX, int waitStartByteCycles) : RX(RX), waitStartByteCycles(waitStartByteCycles) {
+UARTProtocol::UARTProtocol(hwlib::pin_in &RX, int waitStartByteCycles) : RX(RX), waitStartByteCycles(waitStartByteCycles) {
 }
 
 char UARTProtocol::getByte() {
