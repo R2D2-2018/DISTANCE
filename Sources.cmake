@@ -11,5 +11,9 @@ include_directories (${catch}/single_include)
 # Source Files:
 
 set (sources
-
+    src/libc-stub.cpp
+    src/filter.cpp
+    src/lidar_mini.cpp
+    src/uart_connection.cpp
+    src/uart_connection.cpp
 )
