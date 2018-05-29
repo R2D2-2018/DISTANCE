@@ -11,9 +11,10 @@ include_directories (${catch}/single_include)
 # Source Files:
 
 set (sources
+    src/wrap-hwlib.cpp
     src/libc-stub.cpp
     src/filter.cpp
     src/lidar_mini.cpp
-    src/uart_connection.cpp
+    src/HCSR04.cpp
     src/uart_connection.cpp
 )
