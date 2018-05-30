@@ -19,6 +19,7 @@
 class LIDARmini {
   private:
     UARTConnection uart;
+    char registerSetByte = 0x0;
 
   public:
     /**
@@ -39,7 +40,6 @@ class LIDARmini {
      * @return
      * std::array : bytes
      */
-    std::array<char, 7> getSensorData();
 
     /**
      * @brief
@@ -52,6 +52,10 @@ class LIDARmini {
      * int : distance value
      */
     int getDistance();
+
+    std::array<char, 8> getWantedRegisters();
+
+    void setRegisterSetByte(char newByte);
 };
 
 #endif // LIDAR_MINI_HPP
