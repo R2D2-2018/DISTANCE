@@ -10,9 +10,9 @@ int main() {
 
     LIDARmini lidar;
 
-    lidar.setRegisterSetByte(0xFF);
-    std::array<char, 8> bytes2 = lidar.getWantedRegisters();
-    for (int i = 0; i < 8; i++) {
+    // lidar.setRegisterSetByte(0xFF);
+    std::array<char, 9> bytes2 = lidar.getWantedRegisters(0xFF);
+    for (int i = 0; i < 9; i++) {
         hwlib::cout << "Byte: " << int(bytes2[i]) << "\r" << hwlib::endl;
     }
 
