@@ -23,7 +23,7 @@ std::array<char, 7> LIDARmini::getSensorData() {
                 for (int i = 0; i < 7; i++) {  // Loop for 7 more times to print the remaining data package.
                     bytes[i] = uart.receive(); // Fill the bytes array
                 }
-                return bytes;
+                break;
             }
         }
     }

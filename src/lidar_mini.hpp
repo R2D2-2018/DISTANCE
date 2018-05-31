@@ -24,7 +24,7 @@ class LIDARmini {
     /**
      * @brief Constructor
      */
-    explicit LIDARmini();
+    LIDARmini();
 
     /**
      * @brief
@@ -37,7 +37,7 @@ class LIDARmini {
      * is because of the function needing to get in sick with the baudrate.
      *
      * @return
-     * std::array : bytes
+     * The full datapackage
      */
     std::array<char, 7> getSensorData();
 
@@ -46,10 +46,11 @@ class LIDARmini {
      * Get distance in centimers
      *
      * @description
-     * Returns the distance to an object in centimeters
+     * Returns the distance to an object in centimeters.
+     * centimeters is the devalt scale of the sensor.
      *
      * @return
-     * int : distance value
+     * The distance value
      */
     int getDistance();
 };
