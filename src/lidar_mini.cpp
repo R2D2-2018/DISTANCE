@@ -31,6 +31,7 @@ std::array<char, 9> LIDARmini::getWantedRegisters(char registerSetByte) {
                     wantedRegisters[1] = 0x59;
                     registerCounter = registerCounter + 2;
                 }
+<<<<<<< HEAD
                 for (int i = 6; i >= 0; i--) { // Loop for 7 more times to fill in the remaining data package in the array.
                     if (((registerSetByte >> (i)) % 2)) { // checks if the array posistion of the check byte is 1.
                         wantedRegisters[registerCounter] = uart.receive();
@@ -40,6 +41,9 @@ std::array<char, 9> LIDARmini::getWantedRegisters(char registerSetByte) {
                     }
                 }
                 return wantedRegisters;
+=======
+                break;
+>>>>>>> development
             }
         }
     }

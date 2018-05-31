@@ -26,7 +26,7 @@ class LIDARmini {
     /**
      * @brief Constructor
      */
-    explicit LIDARmini();
+    LIDARmini();
 
     /**
      * @brief
@@ -60,7 +60,11 @@ class LIDARmini {
      * A char which is used as a binary byte and the bits corrosponts to the registers as explained in the discription.
      *
      * @return
+<<<<<<< HEAD
      * A array with the requested register data.
+=======
+     * The full datapackage
+>>>>>>> development
      */
     std::array<char, 9> getWantedRegisters(char registerSetByte);
 
@@ -86,10 +90,15 @@ class LIDARmini {
      * Get distance in centimers
      *
      * @description
-     * Returns the distance to an object in centimeters
+     * Returns the distance to an object in centimeters.
+     * centimeters is the devalt scale of the sensor.
      *
      * @return
+<<<<<<< HEAD
      * the distance value
+=======
+     * The distance value
+>>>>>>> development
      */
     int getDistance();
 
