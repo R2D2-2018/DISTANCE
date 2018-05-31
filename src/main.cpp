@@ -7,4 +7,13 @@ int main() {
     namespace target = hwlib::target;
 
     hwlib::wait_ms(1000);
+
+    LIDARmini lidar;
+    hwlib::cout << lidar.getDistance() << "\r" << hwlib::endl;
+
+    std::array<char, 9> registers = lidar.getWantedRegisters(0b01100000);
+    hwlib::cout << int(registers[0]) << "\r" << hwlib::endl;
+
+    std::array<char, 9> registers2 = lidar.getWantedRegisters(LidarMiniRegisters::Distance);
+    hwlib::cout << int(registers2[0]) << "\r" << hwlib::endl;
 }
