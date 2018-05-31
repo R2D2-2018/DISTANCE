@@ -28,6 +28,18 @@ class LIDARmini {
      */
     LIDARmini();
 
+    static constexpr int countHighBits(char c) {
+        int highBits = 0;
+
+        for (int i = 0; i < 8; i++) {
+            if (c >> i == 1) {
+                highBits++;
+            }
+        }
+
+        return highBits;
+    }
+
     /**
      * @brief
      * Returns an array with the wanted register data. You can tell the functions which register you want with the registerSetByte
@@ -60,13 +72,41 @@ class LIDARmini {
      * A char which is used as a binary byte and the bits corrosponts to the registers as explained in the discription.
      *
      * @return
-<<<<<<< HEAD
      * A array with the requested register data.
-=======
-     * The full datapackage
->>>>>>> development
      */
-    std::array<char, 9> getWantedRegisters(char registerSetByte);
+    template <char registerSetByte>
+    auto getWantedRegisters() {
+        std::array<char, countHighBits(registerSetByte)> wantedRegisters = {};
+
+        // The 100k value is chosen because if it is lower it does not work, we're not quite sure why.
+        // But we think it might be related to the BAUDrate
+        for (int j = 0; j < 100000; j++) {
+            if (uart.available() >= 9) { // 9 is the amound of bytes of the full data package
+                if (uart.receive() == 0x59 &&
+                    uart.receive() ==
+                        0x59) { // Check if startbyte(0x59) is available.., twice. receive() pops an element of a stack
+                    int registerCounter = 0;
+                    if (registerSetByte >>
+                        7) { // registerSetByte is a byte in which every bit corrosponts with a register of the sensor.
+                        // in this case the most left bit is checked and if it's 1 then the start byte will be put in the array.
+                        wantedRegisters[0] = 0x59;
+                        wantedRegisters[1] = 0x59;
+                        registerCounter = registerCounter + 2;
+                    }
+                    for (int i = 6; i >= 0; i--) { // Loop for 7 more times to fill in the remaining data package in the array.
+                        if (((registerSetByte >> i) & 1) == 1) { // checks if the array posistion of the check byte is 1.
+                            wantedRegisters[registerCounter] = uart.receive();
+                            registerCounter++;
+                        } else {
+                            uart.receive();
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        return wantedRegisters;
+    }
 
     /**
      * @brief
@@ -83,7 +123,10 @@ class LIDARmini {
      * @return
      * A array which contains the requested registers form the function.
      */
-    std::array<char, 9> getWantedRegisters(LidarMiniRegisters registerSetByte);
+    template <LidarMiniRegisters registerSetByte>
+    auto getWantedRegisters() {
+        return getWantedRegisters<static_cast<char>(registerSetByte)>();
+    }
 
     /**
      * @brief
@@ -94,11 +137,7 @@ class LIDARmini {
      * centimeters is the devalt scale of the sensor.
      *
      * @return
-<<<<<<< HEAD
-     * the distance value
-=======
      * The distance value
->>>>>>> development
      */
     int getDistance();
 
