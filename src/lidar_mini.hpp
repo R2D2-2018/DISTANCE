@@ -4,6 +4,8 @@
 #include "wrap-hwlib.hpp"
 #include <array>
 
+enum class LidarMiniRegisters { Distance = 0b01100000, Strength = 0b00011000, QualityDegree = 0b00000010, PerityByte = 0b00000001 };
+
 /**
  * @file      lidar_mini.hpp
  * @brief     Hpp file for the class LIDARmini which will contain functions to control the TF LIDAR mini sensor
@@ -60,6 +62,7 @@ class LIDARmini {
      * @return
      * wantedRegisters : std::array
      */
+    std::array<char, 9> getWantedRegisters(LidarMiniRegisters registerSetByte);
     std::array<char, 9> getWantedRegisters(char registerSetByte);
 
     /**
@@ -89,7 +92,7 @@ class LIDARmini {
 
     /**
      * @brief
-     * Returns the signal signal quality degree
+     * Returns the signal quality degree
      *
      * @description
      * Returns the quelity degree resieved form the quality degree register.
@@ -98,6 +101,19 @@ class LIDARmini {
      * int : qualityDegree
      */
     int getQualityDegree();
+
+    /**
+     * @brief
+     * Returns the perity byte.
+     *
+     * @description
+     * Returns the perity byte which is the sum of register 1 to 8.
+     * This register only contains the lower byte.
+     *
+     * @return
+     * int : perityByte
+     */
+    int getPerityByte();
 };
 
 #endif // LIDAR_MINI_HPP
