@@ -11,10 +11,12 @@ int main() {
     LIDARmini lidar;
 
     // lidar.setRegisterSetByte(0xFF);
-    std::array<char, 9> bytes2 = lidar.getWantedRegisters(0xFF);
+    std::array<char, 9> bytes2 = lidar.getWantedRegisters(0x98);
     for (int i = 0; i < 9; i++) {
         hwlib::cout << "Byte: " << int(bytes2[i]) << "\r" << hwlib::endl;
     }
 
-    hwlib::cout << lidar.getDistance();
+    hwlib::cout << lidar.getDistance() << "\r" << hwlib::endl;
+    hwlib::cout << lidar.getStrength() << "\r" << hwlib::endl;
+    hwlib::cout << lidar.getQualityDegree() << "\r" << hwlib::endl;
 }
