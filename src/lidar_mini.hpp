@@ -57,13 +57,29 @@ class LIDARmini {
      * data from
      *
      * @param
-     * registerSetByte : char
+     * A char which is used as a binary byte and the bits corrosponts to the registers as explained in the discription.
      *
      * @return
-     * wantedRegisters : std::array
+     * A array with the requested register data.
+     */
+    std::array<char, 9> getWantedRegisters(char registerSetByte);
+
+    /**
+     * @brief
+     * Makes it so getwantedRegister accepts enums
+     *
+     * @description
+     * This function gets in the enum which is a byte and the casts the byte to a char
+     * and puts that into the getwantedregister function that uses chars.
+     * After that the function will return the array it gets form the getWantedRegisters(char) function
+     *
+     * @param
+     * A enum that is a byte which corrosponts to the registers of the sensor.
+     *
+     * @return
+     * A array which contains the requested registers form the function.
      */
     std::array<char, 9> getWantedRegisters(LidarMiniRegisters registerSetByte);
-    std::array<char, 9> getWantedRegisters(char registerSetByte);
 
     /**
      * @brief
@@ -73,7 +89,7 @@ class LIDARmini {
      * Returns the distance to an object in centimeters
      *
      * @return
-     * int : distance value
+     * the distance value
      */
     int getDistance();
 
@@ -86,7 +102,7 @@ class LIDARmini {
      * to integers.
      *
      * @return
-     * int : signal strength
+     * The signal strength
      */
     int getStrength();
 
@@ -98,7 +114,7 @@ class LIDARmini {
      * Returns the quelity degree resieved form the quality degree register.
      *
      * @return
-     * int : qualityDegree
+     * The queality degree
      */
     int getQualityDegree();
 
@@ -111,7 +127,7 @@ class LIDARmini {
      * This register only contains the lower byte.
      *
      * @return
-     * int : perityByte
+     * The lower byte of the perity register
      */
     int getPerityByte();
 };
