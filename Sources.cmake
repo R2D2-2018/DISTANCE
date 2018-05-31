@@ -17,4 +17,5 @@ set (sources
     src/lidar_mini.cpp
     src/HCSR04.cpp
     src/uart_connection.cpp
+    src/distance.cpp
 )

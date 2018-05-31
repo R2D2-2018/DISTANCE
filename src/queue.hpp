@@ -11,6 +11,8 @@
 #ifndef QUEUE_HPP
 #define QUEUE_HPP
 
+#include <cstddef>
+
 template <class T, size_t QUEUE_SIZE>
 class Queue {
   private:
