@@ -1,6 +1,6 @@
 #ifndef LIDAR_MINI_HPP
 #define LIDAR_MINI_HPP
-#include "uart_protocol.hpp"
+#include "uart_connection.hpp"
 #include "wrap-hwlib.hpp"
 #include <array>
 
@@ -18,28 +18,41 @@
  */
 class LIDARmini {
   private:
-    hwlib::pin_in &RX;
+    UARTConnection uart;
 
   public:
     /**
      * @brief Constructor
      */
-    LIDARmini(hwlib::pin_in &RX);
-
-    std::array<char, 7> bytes;
+    LIDARmini();
 
     /**
      * @brief
-     * Returns the distance in cm
+     * Returns an array with all the sensor data
      *
      * @description
-     * Calculates the distance with the uart protocol of the data that comes in over the RX port in cm.
-     * Right now it returns the full package.
+     * If the two startbytes are found returns the data package minus the 2 startbytes, 7 bytes as an array.
+     * If no startbytes are found with in a set amound of try's (100000) an empty array will be returned.
+     * The amound of try's has been determent by tests and 100000 works correctly. We suspect the reason why the amound is so high
+     * is because of the function needing to get in sick with the baudrate.
      *
      * @return
-     * char * : to the first element of the data package
+     * The full datapackage
      */
-    char *getDistanceInCm();
+    std::array<char, 7> getSensorData();
+
+    /**
+     * @brief
+     * Get distance in centimers
+     *
+     * @description
+     * Returns the distance to an object in centimeters.
+     * centimeters is the devalt scale of the sensor.
+     *
+     * @return
+     * The distance value
+     */
+    int getDistance();
 };
 
 #endif // LIDAR_MINI_HPP

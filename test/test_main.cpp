@@ -1,9 +1,8 @@
 #define CATCH_CONFIG_MAIN // This tells Catch to provide a main() - only do this in one cpp file
 #include "catch.hpp"
-
-#include "../src/filter.cpp"
-#include "../src/lidar_mini.cpp"
-#include "../src/uart_protocol.cpp"
+#include "filter.cpp"
+#include "lidar_mini.cpp"
+#include "wrap-hwlib.hpp"
 
 TEST_CASE("Example Test Case") {
     REQUIRE(10 == 10);

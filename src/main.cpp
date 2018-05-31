@@ -1,5 +1,5 @@
 #include "lidar_mini.hpp"
-#include "uart_protocol.hpp"
+#include "uart_connection.hpp"
 #include "wrap-hwlib.hpp"
 
 int main() {
