@@ -44,19 +44,19 @@ std::array<char, 9> LIDARmini::getWantedRegisters(char registerSetByte) {
 
 int LIDARmini::getDistance() {
     std::array<char, 9> data = this->getWantedRegisters(0x60); // 0110 0000 because we want the 2 dist registers
-    int dist_L = data[2];                                      // dist_L is register 2
-    int dist_H = data[3];                                      // dist_H is register 3
+    int dist_L = data[0];                                      // dist_L is register 2
+    int dist_H = data[1];                                      // dist_H is register 3
     return (dist_H << 8) | (dist_L);
 }
 
 int LIDARmini::getStrength() {
     std::array<char, 9> data = this->getWantedRegisters(0x18); // 0001 1000 because we want the 2 strength registers
-    int strength_L = data[4];                                  // strength_L is register 4
-    int strength_H = data[5];                                  // strength_H is register 5
+    int strength_L = data[0];                                  // strength_L is register 4
+    int strength_H = data[1];                                  // strength_H is register 5
     return (strength_H << 8) | (strength_L);
 }
 
 int LIDARmini::getQualityDegree() {
     std::array<char, 9> data = this->getWantedRegisters(0x02);
-    return data[8]; // QualityDegree is register 8
+    return data[0]; // QualityDegree is register 8
 }
