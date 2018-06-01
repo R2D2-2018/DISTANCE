@@ -23,20 +23,12 @@ int Distance::getDistance(Distance::SensorType sensorType, Distance::Scale scale
     } else if (sensorType == SensorType::ULTRASONIC && ultrasonic != nullptr) {
         return ultrasonic->getDistance();
     } else if (sensorType == SensorType::AUTOMATIC && lidar != nullptr && ultrasonic != nullptr) {
-
         int lidar_distance = lidar->getDistance();
-
-        if (lidar_distance > 35) {
-            hwlib::cout << "LIDAR DIST" << hwlib::endl;
-            return lidar_distance;
-        } else {
-            hwlib::cout << "ULTRA DIST" << hwlib::endl;
-            return ultrasonic->getDistance();
-        }
+        return lidar_distance > 35 ? lidar_distance : ultrasonic->getDistance();
     }
     return 1234;
 }
 
 int Distance::convertToInches(int centimeters) {
-    return 1;
+    return 0.3937 * centimeters;
 }
