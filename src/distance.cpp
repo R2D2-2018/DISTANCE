@@ -8,27 +8,33 @@
  * @license   MIT
  */
 
-Distance::Distance(hwlib::target::pin_in &RX) : RX(&RX) {
+Distance::Distance(LIDARmini *lidar) : lidar(lidar), ultrasonic(nullptr) {
 }
 
-Distance::Distance(hwlib::target::pin_out &trigger_pin, hwlib::target::pin_in &echo_pin)
-    : trigger_pin(&trigger_pin), echo_pin(&echo_pin) {
+Distance::Distance(HCSR04 *ultrasonic) : lidar(nullptr), ultrasonic(ultrasonic) {
 }
 
-Distance::Distance(hwlib::target::pin_out &trigger_pin, hwlib::target::pin_in &echo_pin, hwlib::target::pin_in &RX)
-    : trigger_pin(&trigger_pin), echo_pin(&echo_pin), RX(&RX) {
+Distance::Distance(LIDARmini *lidar, HCSR04 *ultrasonic) : lidar(lidar), ultrasonic(ultrasonic) {
 }
 
-int Distance::getDistance(Distance::Sensor sensor, Distance::Scale scale) {
-    // Test
-    if (sensor == Sensor::LIDAR) {
-        return 1;
-    } else if (sensor == Sensor::ULTRASONIC) {
-        return 2;
-    } else if (sensor == Sensor::AUTOMATIC) {
-        return 3;
+int Distance::getDistance(Distance::SensorType sensorType, Distance::Scale scale) {
+    if (sensorType == SensorType::LIDAR && lidar != nullptr) {
+        return lidar->getDistance();
+    } else if (sensorType == SensorType::ULTRASONIC && ultrasonic != nullptr) {
+        return ultrasonic->getDistance();
+    } else if (sensorType == SensorType::AUTOMATIC && lidar != nullptr && ultrasonic != nullptr) {
+
+        int lidar_distance = lidar->getDistance();
+
+        if (lidar_distance > 35) {
+            hwlib::cout << "LIDAR DIST" << hwlib::endl;
+            return lidar_distance;
+        } else {
+            hwlib::cout << "ULTRA DIST" << hwlib::endl;
+            return ultrasonic->getDistance();
+        }
     }
-    return 0;
+    return 1234;
 }
 
 int Distance::convertToInches(int centimeters) {
