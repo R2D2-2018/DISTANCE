@@ -1,6 +1,5 @@
 #ifndef FILTER_HPP
 #define FILTER_HPP
-#include "wrap-hwlib.hpp"
 
 /**
  * @file      filter.hpp
