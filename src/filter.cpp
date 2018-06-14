@@ -8,18 +8,15 @@
  * @license   MIT
  */
 
-// TODO: Change to use C++ array
-int Filter::getMedian(int list[], int length) {
-    int i = 1;
-    // TODO: Change to use for loop instead of while
-    while (i < length) {
-        for (int j = i; list[j - 1] > list[j]; j--) {
-            int temp = list[j];
-            list[j] = list[j - 1];
-            list[j - 1] = temp;
-        }
-        i++;
-    }
+int Median::get(std::array<int> values) {
+    /// Sort the array before finding middle value(s)
+    std::sort(values.begin(), values.end());
+    int length = values.size();
+    /// If the length of the array is uneven, return the middle value. Else return the average of the two middle values.
+    return (length % 2) ? values[length / 2] : (values[length / 2 - 1] + values[length / 2]) / 2;
+}
 
-    return length % 2 ? list[length / 2] : (list[length / 2 - 1] + list[length / 2]) / 2;
+int Kalman::get(std::array<int> values) {
+    /// Dummy functionality:
+    return values[0];
 }
