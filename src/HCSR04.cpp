@@ -8,8 +8,7 @@
  * @license   MIT
  */
 
-HCSR04::HCSR04(hwlib::target::pin_out &trigger_pin, hwlib::target::pin_in &echo_pin)
-    : trigger_pin(trigger_pin), echo_pin(echo_pin) {
+HCSR04::HCSR04(hwlib::pin_out &trigger_pin, hwlib::pin_in &echo_pin) : trigger_pin(trigger_pin), echo_pin(echo_pin) {
 }
 
 int HCSR04::getDistance() {
