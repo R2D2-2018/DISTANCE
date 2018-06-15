@@ -8,15 +8,23 @@
  * @license   MIT
  */
 
-int Median::get(std::array<int> values) {
+int Median::get(int *values, const int size) {
     /// Sort the array before finding middle value(s)
-    std::sort(values.begin(), values.end());
-    int length = values.size();
-    /// If the length of the array is uneven, return the middle value. Else return the average of the two middle values.
-    return (length % 2) ? values[length / 2] : (values[length / 2 - 1] + values[length / 2]) / 2;
+    int j, temp;
+    for (int i = 0; i < size; i++) {
+        j = i;
+        while (j > 0 && values[j] < values[j - 1]) {
+            temp = values[j];
+            values[j] = values[j - 1];
+            values[j - 1] = temp;
+            j--;
+        }
+    }
+    /// If the size of the array is uneven, return the middle value. Else return the average of the two middle values.
+    return (size % 2) ? values[size / 2] : (values[size / 2 - 1] + values[size / 2]) / 2;
 }
 
-int Kalman::get(std::array<int> values) {
-    /// Dummy functionality:
+int Kalman::get(int *values, const int size) {
+    /// Dummy functionality, returns first value in array:
     return values[0];
 }

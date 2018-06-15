@@ -1,6 +1,7 @@
 #ifndef FILTER_HPP
 #define FILTER_HPP
 #include "wrap-hwlib.hpp"
+#include <array>
 
 /**
  * @file      filter.hpp
@@ -24,11 +25,12 @@ class Filter {
      * @description
      * Virtual function which, when given a set of (previous) values, will return a filtered value.
      *
-     * @param std::array<int> The most recent set of (filtered) values, including the latest raw value.
+     * @param int[] A pointer to the most recent set of (filtered) values, including the latest raw value.
+     * @param int Size of the aforementioned set of values.
      * @return
      * int : The filtered value or error value (-1)
      */
-    virtual int get(std::array<int> values) = 0;
+    virtual int get(int *values, const int size) = 0;
 };
 /**
  * @class Median
@@ -44,11 +46,12 @@ class Median : public Filter {
      * @description
      * Get-function which, when given a set of (previous) values, will return a median-filtered value.
      *
-     * @param std::array<int> The most recent set of (filtered) values, including the latest raw value.
+     * @param int[] A pointer to the most recent set of (filtered) values, including the latest raw value.
+     * @param int Size of the aforementioned set of values.
      * @return
      * int : The median-filtered value or error value (-1)
      */
-    int get(std::array<int> values) override;
+    int get(int *values, const int size) override;
 };
 
 /**
@@ -67,11 +70,12 @@ class Kalman : public Filter {
      * Get-function which, when given an array containing the latest raw-
      * and filtered value (in that respective order), will return a Kalman-filtered value.
      *
-     * @param std::array<int> The most recent raw- and filtered value in that respective order.
+     * @param int[] A pointer to the most recent raw- and filtered value in that respective order.
+     * @param int Size of the aforementioned set of values.
      * @return
      * int : The Kalman-filtered value or error value (-1)
      */
-    int get(std::array<int> values) override;
+    int get(int *values, const int size) override;
 };
 
 #endif // FILTER_HPP

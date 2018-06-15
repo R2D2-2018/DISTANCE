@@ -1,18 +1,35 @@
 #define CATCH_CONFIG_MAIN // This tells Catch to provide a main() - only do this in one cpp file
 #include "catch.hpp"
-#include "filter.cpp"
-#include "lidar_mini.cpp"
+#include "filter.hpp"
+#include "lidar_mini.hpp"
 #include "wrap-hwlib.hpp"
 
-TEST_CASE("Example Test Case") {
-    REQUIRE(10 == 10);
+TEST_CASE("Median::get() even", "[median]") {
+    int size = 8;
+    int[size] values = {9, 6, 3, 4, 7, 1, 8, 2};
+    /// Class instance call
+    Filter filter = Median();
+    /// Since the amount of values is even, it will be the average of 4 and 6.
+    REQUIRE(filter.get(values, size) == 5);        // should pass
+    REQUIRE_FALSE(filter.get(values, size) == -1); // should fail
 }
 
-TEST_CASE("Filter::getMedian") {
-    Filter filter;
-    int a[] = {1, 2, 3, 4, 5, 6, 8, 9};
-    int size = sizeof(a) / sizeof(int);
+TEST_CASE("Median::get() odd", "[median]") {
+    int size = 7;
+    int[size] values = {6, 3, 4, 5, 1, 8, 2};
+    /// Class instance call
+    Filter filter = Median();
+    /// Since the amount of values is odd, it will be the middle value (in this case, 4).
+    REQUIRE(filter.get(values, size) == 4);        // should pass
+    REQUIRE_FALSE(filter.get(values, size) == -1); // should fail
+}
 
-    REQUIRE(filter.getMedian(a, size) == 4);       // should pass
-    REQUIRE_FALSE(filter.getMedian(a, size) == 9); // should fail
+TEST_CASE("Kalman::get()", "[kalman]") {
+    /// Kalman filter is still dummy code which returns the first element of the array.
+    int size = 2;
+    int[size] values = {6, 5};
+    /// Class instance call
+    Filter filter = Kalman();
+    REQUIRE(filter.get(values, size) == 6);
+    REQUIRE_FALSE(filter.get(values, size) == -1);
 }
