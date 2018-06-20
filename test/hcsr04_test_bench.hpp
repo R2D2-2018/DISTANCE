@@ -220,7 +220,8 @@ TEST_CASE("Test HCSR04TestBench Blast Time") {
         ;
     elapsedTime = hwlib::now_us() - startTime;
 
-    REQUIRE(signalTime == elapsedTime);
+    REQUIRE(elapsedTime >= signalTime - 1);
+    REQUIRE(elapsedTime <= signalTime + 1);
 }
 
 #endif // HCSR04_TEST_BENCH_HPP
