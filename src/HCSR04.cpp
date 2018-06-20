@@ -18,22 +18,25 @@ int HCSR04::getDistance() {
     hwlib::wait_ms(10);
     trigger_pin.set(0);
 
+    // Get current time
+    long long int duration = hwlib::now_us();
+
     // Receive pulse
     bool received = echo_pin.get();
 
-    // Get current time
-    int duration = (int)hwlib::now_us();
-
-    while (!received) {
-        received = echo_pin.get();
+    // If the first pulse hasn't been received yet, wait until first pulse is found.
+    if (!received) {
+        while (!(received = echo_pin.get()))
+            ;
     }
-    while (received) {
-        received = echo_pin.get();
-    }
+    // While the first pulse has just occurred, keep on looping until echo_pin returns false.
+    while ((received = echo_pin.get()))
+        ;
 
-    // Calculate distance
-    duration = (int)((hwlib::now_us() - duration) - 400);
-    int distance = (int)((duration / 2) / 29.1);
+    // Calculate distance by converting duration to centiseconds,
+    // multiplying with the speed of sound (343m/s) and dividing this roundtrip distance by two.
+    duration = hwlib::now_us() - duration;
+    int distance = (int)((duration / 29.1) / 2);
 
     // Return distance, when it exceeds it's maximum range; it returns 400.
     return distance < 400 ? distance : 400;

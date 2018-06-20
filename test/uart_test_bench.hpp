@@ -16,7 +16,7 @@
  * UARTTestBenchBehavior component and injecting it into UARTTestBench.
  */
 class UARTTestBenchBehavior {
-public:
+  public:
     void txRoutine(char c);
     char rxRoutine();
 };
@@ -35,7 +35,7 @@ class ConstantRx : public UARTTestBenchBehavior {
   public:
     /**
      * @brief Dummy function, no functionality
-     * 
+     *
      * @param c Unused
      */
     void txRoutine(char c) {
@@ -43,12 +43,12 @@ class ConstantRx : public UARTTestBenchBehavior {
 
     /**
      * @brief Returns the next char in buffer
-     * 
+     *
      * @details
      * Captures the next char in buffer, increments the buffer counter to keep track
      * of the sent characters. Then returns the captured char.
-     * 
-     * @return char Next char in buffer 
+     *
+     * @return char Next char in buffer
      */
     char rxRoutine() {
         return rxData.at(rxCount++);
@@ -57,14 +57,14 @@ class ConstantRx : public UARTTestBenchBehavior {
   public:
     /**
      * @brief Construct a new Constant Rx object
-     * 
+     *
      */
     ConstantRx() : rxData{}, rxCount(0) {
     }
 
     /**
      * @brief Construct a new Constant Rx object with rxData as data
-     * 
+     *
      * @param data Data to construct rxData with
      */
     ConstantRx(std::initializer_list<char> data) : rxData{data}, rxCount(0) {
@@ -73,7 +73,7 @@ class ConstantRx : public UARTTestBenchBehavior {
 
 /**
  * @brief UARTTestBench connection for virtual uart testing
- * 
+ *
  * @details
  * This class derives from IOStream, just like HardwareUART does.
  * If the tested classes refer to HardwareUART as a IOStream,
@@ -90,7 +90,7 @@ class UARTTestBench : public IOStream {
 
     /**
      * @brief Runs the test behavior's txRoutine with the transmitted char
-     * 
+     *
      * @param c Character as determined by the tested code
      */
     void putc(char c) override {
@@ -99,8 +99,8 @@ class UARTTestBench : public IOStream {
 
     /**
      * @brief Reports if this UART is working
-     * 
-     * @return true 
+     *
+     * @return true
      */
     bool char_available() override {
         return true;
@@ -108,7 +108,7 @@ class UARTTestBench : public IOStream {
 
     /**
      * @brief Runs the test behavior's rxRoutine and returns the received char
-     * 
+     *
      * @return char Character as determined by testBehavior.rxRoutine()
      */
     char getc() override {
@@ -118,7 +118,7 @@ class UARTTestBench : public IOStream {
   public:
     /**
      * @brief Construct a new UARTTestBench object
-     * 
+     *
      * @param testBehavior Behavior component to use for emulating hardware
      */
     UARTTestBench(BEHAVIOR_COMPONENT_T testBehavior) : testBehavior(testBehavior) {
@@ -126,8 +126,8 @@ class UARTTestBench : public IOStream {
 
     /**
      * @brief Construct a new UARTTestBench and propagates the initializerList to the test behavior's constructor
-     * 
-     * @param initializerList 
+     *
+     * @param initializerList
      */
     UARTTestBench(std::initializer_list<char> initializerList) : testBehavior{initializerList} {
     }
@@ -135,13 +135,13 @@ class UARTTestBench : public IOStream {
 
 /**
  * @brief Test UARTTestBench
- * 
+ *
  * @details
  * This test case tests the ability of UARTTestBench to function using a constant series of rx data.
  */
 TEST_CASE("Test UARTTestBench") {
     UARTTestBench<ConstantRx> uart{0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x18, 0x19, 0x1A, 0x1B, 0x1C, 0x1D, 0x1E, 0x1F,
-                              0x60, 0x61, 0x62, 0x63, 0x64, 0x65, 0x66, 0x67, 0x78, 0x79, 0x7A, 0x7B, 0x7C, 0x7D, 0x7E, 0x7F};
+                                   0x60, 0x61, 0x62, 0x63, 0x64, 0x65, 0x66, 0x67, 0x78, 0x79, 0x7A, 0x7B, 0x7C, 0x7D, 0x7E, 0x7F};
 
     char data[32] = {};
 
