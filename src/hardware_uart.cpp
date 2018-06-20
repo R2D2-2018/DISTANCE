@@ -1,18 +1,18 @@
-#include "uart_connection.hpp"
+#include "hardware_uart.hpp"
 
-UARTConnection::UARTConnection(unsigned int baudrate, UARTController controller, bool initializeController)
+HardwareUART::HardwareUART(unsigned int baudrate, UARTController controller, bool initializeController)
     : baudrate(baudrate), controller(controller) {
     if (initializeController) {
         begin();
     }
 }
 
-UARTConnection::~UARTConnection() {
+HardwareUART::~HardwareUART() {
     /// Disable the UART controller on destruction
     disable();
 }
 
-void UARTConnection::begin() {
+void HardwareUART::begin() {
     /// Only initialize the UART controller if it hasn't been enabled.
     if (USARTControllerInitialized) {
         return;
@@ -78,7 +78,7 @@ void UARTConnection::begin() {
     USARTControllerInitialized = true;
 }
 
-unsigned int UARTConnection::available() {
+unsigned int HardwareUART::available() {
     if (!USARTControllerInitialized) {
         return false;
     }
@@ -94,7 +94,7 @@ unsigned int UARTConnection::available() {
     return rxBuffer.count();
 }
 
-bool UARTConnection::send(const char b) {
+bool HardwareUART::send(const char b) {
     if (!USARTControllerInitialized) {
         return false;
     }
@@ -104,7 +104,7 @@ bool UARTConnection::send(const char b) {
     return true;
 }
 
-bool UARTConnection::send(const char *str) {
+bool HardwareUART::send(const char *str) {
     if (!USARTControllerInitialized) {
         return false;
     }
@@ -116,7 +116,7 @@ bool UARTConnection::send(const char *str) {
     return true;
 }
 
-bool UARTConnection::send(const char *data, size_t length) {
+bool HardwareUART::send(const char *data, size_t length) {
     if (!USARTControllerInitialized) {
         return false;
     }
@@ -128,7 +128,7 @@ bool UARTConnection::send(const char *data, size_t length) {
     return true;
 }
 
-char UARTConnection::receive() {
+char HardwareUART::receive() {
     if (!USARTControllerInitialized || !rxBuffer.count()) {
         return -1;
     }
@@ -138,23 +138,11 @@ char UARTConnection::receive() {
     return rxBuffer.pop();
 }
 
-void UARTConnection::operator<<(const char *str) {
-    send(str);
-}
-
-void UARTConnection::operator<<(const char c) {
-    send(c);
-}
-
-void UARTConnection::operator>>(char &c) {
-    c = receive();
-}
-
-bool UARTConnection::isInitialized() {
+bool HardwareUART::isInitialized() {
     return USARTControllerInitialized;
 }
 
-void UARTConnection::sendByte(const char &b) {
+void HardwareUART::sendByte(const char &b) {
     /// Wait before we can send any more data
     while (!txReady())
         ;
@@ -163,21 +151,21 @@ void UARTConnection::sendByte(const char &b) {
     hardwareUSART->US_THR = b;
 }
 
-inline char UARTConnection::receiveByte() {
+char HardwareUART::receiveByte() {
     return hardwareUSART->US_RHR;
 }
 
-inline bool UARTConnection::txReady() {
+bool HardwareUART::txReady() {
     /// We use the USART Channel status register to wait until the TXRDY bit is cleared.
     return (hardwareUSART->US_CSR & 2);
 }
 
-inline void UARTConnection::enable() {
+void HardwareUART::enable() {
     /// Enable the transmitter and receiver
     hardwareUSART->US_CR = UART_CR_RXEN | UART_CR_TXEN;
 }
 
-inline void UARTConnection::disable() {
+void HardwareUART::disable() {
     /// Set the control register to reset and disable the receiver and transmitter.
     hardwareUSART->US_CR = UART_CR_RSTRX | UART_CR_RSTTX | UART_CR_RXDIS | UART_CR_TXDIS;
 }

@@ -7,7 +7,7 @@
  * @date      21-5-2018
  * @license   MIT
  */
-LIDARmini::LIDARmini() : uart(115200, UARTController::ONE, 1) {
+LIDARmini::LIDARmini(IOStream &uart) : uart(uart) {
 }
 
 std::array<char, 9> LIDARmini::getWantedRegisters(LidarMiniRegisters registerSetByte) {
@@ -20,25 +20,32 @@ std::array<char, 9> LIDARmini::getWantedRegisters(char registerSetByte) {
     // The 100k value is chosen because if it is lower it does not work, we're not quite sure why.
     // But we think it might be related to the BAUDrate
     for (int j = 0; j < 100000; j++) {
-        if (uart.available() >= 9) { // 9 is the amound of bytes of the full data package
-            if (uart.receive() == 0x59 &&
-                uart.receive() == 0x59) { // Check if startbyte(0x59) is available.., twice. receive() pops an element of a stack
+        char c;
+        uart >> c;
+
+        if (c == 0x59) {
+            char dat[8];
+
+            for (int i = 0; i < 8; i++) {
+                uart >> dat[i];
+            }
+
+            if (dat[0] == 0x59) {
                 int registerCounter = 0;
-                if (registerSetByte >>
-                    7) { // registerSetByte is a byte in which every bit corrosponts with a register of the sensor.
-                    // in this case the most left bit is checked and if it's 1 then the start byte will be put in the array.
+
+                if (registerSetByte >> 7) {
                     wantedRegisters[0] = 0x59;
                     wantedRegisters[1] = 0x59;
-                    registerCounter = registerCounter + 2;
+                    registerCounter += 2;
                 }
-                for (int i = 6; i >= 0; i--) { // Loop for 7 more times to fill in the remaining data package in the array.
-                    if (((registerSetByte >> (i)) % 2)) { // checks if the array posistion of the check byte is 1.
-                        wantedRegisters[registerCounter] = uart.receive();
+
+                for (int i = 1; i < 8; i++) {
+                    if (((registerSetByte >> i) & 1) != 0) {
+                        wantedRegisters[registerCounter] = dat[i];
                         registerCounter++;
-                    } else {
-                        uart.receive();
                     }
                 }
+
                 break;
             }
         }

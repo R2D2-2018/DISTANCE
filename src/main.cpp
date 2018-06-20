@@ -1,5 +1,4 @@
 #include "distance.hpp"
-#include "uart_connection.hpp"
 #include "wrap-hwlib.hpp"
 
 int main() {

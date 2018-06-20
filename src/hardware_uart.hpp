@@ -8,8 +8,8 @@
 #ifndef UART_COMM_HPP
 #define UART_COMM_HPP
 
+#include "io_stream.hpp"
 #include "queue.hpp"
-#include "wrap-hwlib.hpp"
 
 /**
  * @brief Used to select the UART controllers available on the Arduino Due.
@@ -25,7 +25,7 @@ enum class UARTController { ONE, TWO, THREE };
  * @brief Establishes an serial/UART connection using on of the three dedicated serial controllers located on the Arduino Due.
  *
  */
-class UARTConnection {
+class HardwareUART : public IOStream {
   public:
     /**
      * @brief Construct a new UARTConnection object.
@@ -37,7 +37,7 @@ class UARTConnection {
      *
      * @param initializeController Initialize the USART controller directly within the object constructor.
      */
-    UARTConnection(unsigned int baudrate, UARTController controller = UARTController::ONE, bool initializeController = true);
+    HardwareUART(unsigned int baudrate, UARTController controller = UARTController::ONE, bool initializeController = true);
 
     /**
      * @brief Begin a UART connection.
@@ -115,33 +115,12 @@ class UARTConnection {
     bool isInitialized();
 
     /**
-     * @brief Send a single byte.
-     *
-     * @param c Byte.
-     */
-    void operator<<(const char c);
-
-    /**
-     * @brief Send a string.
-     *
-     * @param str String (must be null terminated).
-     */
-    void operator<<(const char *str);
-
-    /**
-     * @brief Receive a byte.
-     *
-     * @param c Byte.
-     */
-    void operator>>(char &c);
-
-    /**
      * @brief Destroy the UARTConnection object.
      *
      * Disables the UART controller to save resources.
      *
      */
-    ~UARTConnection();
+    ~HardwareUART();
 
   private:
     /**
@@ -195,6 +174,18 @@ class UARTConnection {
      * @return char
      */
     inline char receiveByte();
+
+    void putc(char c) override {
+        sendByte(c);
+    }
+
+    bool char_available() override {
+        return available() > 0;
+    }
+
+    char getc() override {
+        return receiveByte();
+    }
 };
 
 #endif
