@@ -7,7 +7,7 @@
  * @date      21-5-2018
  * @license   MIT
  */
-LIDARmini::LIDARmini(IOStream &uart) : uart(uart) {
+LIDARmini::LIDARmini(HardwareUART &uart) : uart(uart) {
 }
 
 std::array<char, 9> LIDARmini::getWantedRegisters(LidarMiniRegisters registerSetByte) {
@@ -38,15 +38,13 @@ std::array<char, 9> LIDARmini::getWantedRegisters(char registerSetByte) {
                     wantedRegisters[1] = 0x59;
                     registerCounter += 2;
                 }
-
-                for (int i = 1; i < 8; i++) {
-                    if (((registerSetByte >> i) & 1) != 0) {
-                        wantedRegisters[registerCounter] = dat[i];
+                for (int i = 6; i >= 0; i--) { // Loop for 7 more times to fill in the remaining data package in the array.
+                    if (((registerSetByte >> (i)) % 2)) { // checks if the array posistion of the check byte is 1.
+                        wantedRegisters[registerCounter] = uart.receive();
                         registerCounter++;
                     }
                 }
-
-                break;
+                return wantedRegisters;
             }
         }
     }

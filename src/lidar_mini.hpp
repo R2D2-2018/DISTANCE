@@ -1,6 +1,6 @@
 #ifndef LIDAR_MINI_HPP
 #define LIDAR_MINI_HPP
-#include "io_stream.hpp"
+#include "hardware_uart.hpp"
 #include "wrap-hwlib.hpp"
 #include <array>
 
@@ -20,13 +20,13 @@ enum class LidarMiniRegisters { Distance = 0b01100000, Strength = 0b00011000, Qu
  */
 class LIDARmini {
   private:
-    IOStream &uart;
+    HardwareUART &uart;
 
   public:
     /**
      * @brief Constructor
      */
-    LIDARmini(IOStream &uart);
+    explicit LIDARmini(HardwareUART &uart);
 
     /**
      * @brief
