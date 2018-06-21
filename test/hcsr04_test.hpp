@@ -30,10 +30,10 @@ TEST_CASE("HCSR04 Sonar Test Using HCSR04TestBench", "[sensor]") {
         REQUIRE(distance >= 399);
         REQUIRE(distance <= 401);
     }
-    // Speed of sound: 343 m/s
-    // delay: 0,016s
-    // Roundtrip distance: 343 * 0,016 = 5,488m
-    // Travel distance: 5,488 / 2 = 2,744m
+    /// Speed of sound: 343 m/s
+    /// delay: 0,016s
+    /// Roundtrip distance: 343 * 0,016 = 5,488m
+    /// Travel distance: 5,488 / 2 = 2,744m
 
     SECTION("16000 microseconds") {
         HCSR04TestBench testBench = {16000};
@@ -76,4 +76,4 @@ TEST_CASE("HCSR04 Sonar Test Using HCSR04TestBench", "[sensor]") {
     }
 }
 
-#endif // HCSR04_TEST_HPP
+#endif /// HCSR04_TEST_HPP

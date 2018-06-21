@@ -13,31 +13,21 @@ HCSR04::HCSR04(hwlib::pin_out &trigger_pin, hwlib::pin_in &echo_pin) : trigger_p
 
 int HCSR04::getDistance() {
     trigger_pin.set(0);
-    hwlib::wait_ms(2);
     trigger_pin.set(1);
-    hwlib::wait_ms(10);
+    hwlib::wait_us(10);
     trigger_pin.set(0);
-
-    // Get current time
-    long long int duration = hwlib::now_us();
-
-    // Receive pulse
-    bool received = echo_pin.get();
-
-    // If the first pulse hasn't been received yet, wait until first pulse is found.
-    if (!received) {
-        while (!(received = echo_pin.get()))
-            ;
+    /// Wait for first signal from echo pin
+    while (!echo_pin.get()) {
     }
-    // While the first pulse has just occurred, keep on looping until echo_pin returns false.
-    while ((received = echo_pin.get()))
-        ;
-
-    // Calculate distance by converting duration to centiseconds,
-    // multiplying with the speed of sound (343m/s) and dividing this roundtrip distance by two.
+    /// Get current time
+    long long int duration = hwlib::now_us();
+    /// While the first pulse has just occurred, keep on looping until echo_pin returns false.
+    while (echo_pin.get()) {
+    }
+    /// Calculate distance by calculating the delta duration
     duration = hwlib::now_us() - duration;
-    int distance = (int)((duration / 29.1) / 2);
+    int distance = (int)(duration / 58);
 
-    // Return distance, when it exceeds it's maximum range; it returns 400.
+    /// Return distance, when it exceeds it's maximum range; it returns 400.
     return distance < 400 ? distance : 400;
 }
