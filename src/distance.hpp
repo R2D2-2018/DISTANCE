@@ -81,10 +81,9 @@ class Distance {
      * Converts a given centimeter value to inches
      *
      * @param[in]     int                   Centimeters to convert
-     * @param[in]     Distance::Scale       The scale in which the distance has to be returned
-     * @return        inches
+     * @return        int                   Calculated inches
      */
     static int convertToInches(int centimeters);
 };
 
-#endif // DISTANCE_HPP
+#endif /// DISTANCE_HPP
