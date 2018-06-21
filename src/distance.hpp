@@ -86,4 +86,4 @@ class Distance {
     static int convertToInches(int centimeters);
 };
 
-#endif /// DISTANCE_HPP
+#endif ///< DISTANCE_HPP

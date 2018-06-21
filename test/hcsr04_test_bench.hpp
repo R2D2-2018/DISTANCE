@@ -151,8 +151,8 @@ class HCSR04TestBench {
      * @return false When the time difference < 0 or the emulated sound wave has not returned yet.
      */
     static bool echoRoutine(HCSR04TestBench *self) {
-        /// Return true from lastTriggerTime + duration until lastTriggerTime + duration * 2.
-        /// In doing so, this routine returns true during 'duration'.
+        ///< Return true from lastTriggerTime + duration until lastTriggerTime + duration * 2.
+        ///< In doing so, this routine returns true during 'duration'.
         return (hwlib::now_us() > self->lastTriggerTime + self->duration &&
                 hwlib::now_us() < self->lastTriggerTime + self->duration * 2);
     }
@@ -188,7 +188,7 @@ TEST_CASE("Test HCSR04TestBench Blast Time") {
 
     HCSR04TestBench testBench = {10000};
 
-    long long int signalTime = 10000; /// 10 ms
+    long long int signalTime = 10000; ///< 10 ms
 
     hwlib::pin_in &echoPin = testBench.getEchoPin();
     hwlib::pin_out &triggerPin = testBench.getTriggerPin();
@@ -202,14 +202,14 @@ TEST_CASE("Test HCSR04TestBench Blast Time") {
     }
     long long int startTime = hwlib::now_us();
     long long int elapsedTime = 0;
-    /// After this while loop, echoPin.get() returns true.
-    /// While-loop until echoPin.get() returns false
+    ///< After this while loop, echoPin.get() returns true.
+    ///< While-loop until echoPin.get() returns false
     while (echoPin.get() == true) {
     }
     elapsedTime = hwlib::now_us() - startTime;
-    /// We allow the elapsed time to be off by a maximum of one millisecond.
+    ///< We allow the elapsed time to be off by a maximum of one millisecond.
     REQUIRE(elapsedTime >= signalTime - 1000);
     REQUIRE(elapsedTime <= signalTime + 1000);
 }
 
-#endif /// HCSR04_TEST_BENCH_HPP
+#endif ///< HCSR04_TEST_BENCH_HPP

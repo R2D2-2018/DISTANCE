@@ -138,4 +138,4 @@ class LIDARmini {
     int getPerityByte();
 };
 
-#endif /// LIDAR_MINI_HPP
+#endif ///< LIDAR_MINI_HPP

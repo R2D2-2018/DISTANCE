@@ -12,4 +12,4 @@ TEST_CASE("Lidar::getDistance()") {
     std::cout << std::hex << lidar.getDistance() << std::endl;
 }
 
-#endif /// UART_TEST_HPP
+#endif ///< UART_TEST_HPP

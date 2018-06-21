@@ -183,4 +183,4 @@ TEST_CASE("Test UARTTestBench") {
     REQUIRE(data[31] == 0x7F);
 }
 
-#endif /// UART_TEST_BENCH_HPP
+#endif ///< UART_TEST_BENCH_HPP

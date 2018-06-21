@@ -40,4 +40,4 @@ class HCSR04 {
     int getDistance();
 };
 
-#endif /// HCSR04_HPP
+#endif ///< HCSR04_HPP

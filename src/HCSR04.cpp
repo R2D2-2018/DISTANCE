@@ -16,18 +16,18 @@ int HCSR04::getDistance() {
     trigger_pin.set(1);
     hwlib::wait_us(10);
     trigger_pin.set(0);
-    /// Wait for first signal from echo pin
+    ///< Wait for first signal from echo pin
     while (!echo_pin.get()) {
     }
-    /// Get current time
+    ///< Get current time
     long long int duration = hwlib::now_us();
-    /// While the first pulse has just occurred, keep on looping until echo_pin returns false.
+    ///< While the first pulse has just occurred, keep on looping until echo_pin returns false.
     while (echo_pin.get()) {
     }
-    /// Calculate distance by calculating the delta duration
+    ///< Calculate distance by calculating the delta duration
     duration = hwlib::now_us() - duration;
-    int distance = (int)(duration / 58);
+    int distance = duration / 58;
 
-    /// Return distance, when it exceeds it's maximum range; it returns 400.
+    ///< Return distance, when it exceeds it's maximum range; it returns 400.
     return distance < 400 ? distance : 400;
 }
