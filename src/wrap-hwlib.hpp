@@ -1,6 +1,6 @@
 #pragma once
 
-// Wrap hwlib to silence warnings.
+/// Wrap hwlib to silence warnings.
 
-#pragma GCC system_header // Hush...
+#pragma GCC system_header /// Hush...
 #include <hwlib.hpp>
