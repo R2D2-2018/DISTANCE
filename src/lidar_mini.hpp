@@ -90,7 +90,11 @@ class LIDARmini {
      * centimeters is the devalt scale of the sensor.
      *
      * @return
+<<<<<<< Updated upstream
      * The distance value
+=======
+     * the distance value
+>>>>>>> Stashed changes
      */
     int getDistance();
 
