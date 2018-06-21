@@ -32,9 +32,6 @@ std::array<char, 9> LIDARmini::getWantedRegisters(char registerSetByte) {
                 }
                 uart >> dat[i];
             }
-            for (int i = 0; i < 8; i++) {
-                hwlib::cout << hwlib::hex << (int)dat[i] << "\r\n";
-            }
             if (dat[0] == 0x59) {
                 int registerCounter = 0;
                 if (registerSetByte >> 7) {
