@@ -16,6 +16,7 @@ int main() {
     LIDARmini lidar = LIDARmini(uart);
 
     Distance d = Distance(lidar, ultrasonic);
+    d.setSensor(Distance::SensorType::ULTRASONIC);
     while (1) {
         hwlib::cout << d.getDistance() << "\r\n";
         hwlib::wait_ms(1000);
