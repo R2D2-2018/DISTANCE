@@ -28,6 +28,6 @@ int HCSR04::getDistance() {
     duration = hwlib::now_us() - duration;
     int distance = duration / 58;
 
-    ///< Return distance, when it exceeds it's maximum range; it returns 400.
+    ///< Return distance, when it exceeds its maximum range; it returns 400.
     return distance < 400 ? distance : 400;
 }

@@ -198,13 +198,13 @@ TEST_CASE("Test HCSR04TestBench Blast Time") {
     triggerPin.set(true);
     hwlib::wait_us(signalTime);
     triggerPin.set(false);
-    while (echoPin.get() == false) {
+    while (!echoPin.get()) {
     }
     long long int startTime = hwlib::now_us();
     long long int elapsedTime = 0;
     ///< After this while loop, echoPin.get() returns true.
     ///< While-loop until echoPin.get() returns false
-    while (echoPin.get() == true) {
+    while (echoPin.get()) {
     }
     elapsedTime = hwlib::now_us() - startTime;
     ///< We allow the elapsed time to be off by a maximum of one millisecond.

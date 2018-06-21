@@ -17,8 +17,8 @@ std::array<char, 9> LIDARmini::getWantedRegisters(LidarMiniRegisters registerSet
 std::array<char, 9> LIDARmini::getWantedRegisters(char registerSetByte) {
     std::array<char, 9> wantedRegisters = {};
 
-    // The 100k value is chosen because if it is lower it does not work, we're not quite sure why.
-    // But we think it might be related to the BAUDrate
+    ///< The 100k value is chosen because if it is lower it does not work, we're not quite sure why.
+    ///< But we think it might be related to the BAUDrate
     for (int j = 0; j < 100000; j++) {
         char c;
         while (!uart.available()) {
