@@ -2,14 +2,14 @@
 #define UART_TEST_HPP
 
 #include "lidar_mini.hpp"
-#include "uart_test_bench.hpp"
 
 TEST_CASE("Lidar::getDistance()") {
-    UARTTestBench<ConstantRx> uart{0x59, 0x59, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10};
+    // UARTTestBench<ConstantRx> uart{0x59, 0x59, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10};
+    UARTLib::MockUART connMock(115200, UARTLib::UARTController::ONE);
 
-    LIDARmini lidar(uart);
+    LIDARmini lidar(connMock);
 
     std::cout << std::hex << lidar.getDistance() << std::endl;
 }
 
-#endif // UART_TEST_HPP
+#endif /// UART_TEST_HPP

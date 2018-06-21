@@ -1,10 +1,15 @@
 #ifndef LIDAR_MINI_HPP
 #define LIDAR_MINI_HPP
-#include "hardware_uart.hpp"
+#include "uart_lib.hpp"
 #include "wrap-hwlib.hpp"
 #include <array>
 
-enum class LidarMiniRegisters { Distance = 0b01100000, Strength = 0b00011000, QualityDegree = 0b00000010, PerityByte = 0b00000001 };
+enum class LidarMiniRegisters : char {
+    Distance = 0b01100000,
+    Strength = 0b00011000,
+    QualityDegree = 0b00000010,
+    PerityByte = 0b00000001
+};
 
 /**
  * @file      lidar_mini.hpp
@@ -20,13 +25,13 @@ enum class LidarMiniRegisters { Distance = 0b01100000, Strength = 0b00011000, Qu
  */
 class LIDARmini {
   private:
-    HardwareUART &uart;
+    UARTLib::UARTConnection &uart;
 
   public:
     /**
      * @brief Constructor
      */
-    explicit LIDARmini(HardwareUART &uart);
+    explicit LIDARmini(UARTLib::UARTConnection &uart);
 
     /**
      * @brief
@@ -39,11 +44,11 @@ class LIDARmini {
      * is because of the function needing to get in sick with the baudrate.
      *
      * After the function has detected two startbytes.
-     * The function will check which posistions of the registerSetByte have a one and if so it will return those registers in an
+     * The function will check which positions of the registerSetByte have a one and if so it will return those registers in an
      * array. The bytes of the registerSetByte corrospont with the registers of the lidar mini.
      *
      * registerSetByte bits and the corrosponding lidarmini register
-     * 1 : StartBytes (register 1 and 2 are the same and both contain the startbyte)
+     * 1 : StartBytes (register 0 and 1 are the same and both contain the startbyte)
      * 2 : dist_L (the low range distance data)
      * 3 : dist_H (the high range distance data)
      * 4 : strength_L (the low range strength data)
@@ -133,4 +138,4 @@ class LIDARmini {
     int getPerityByte();
 };
 
-#endif // LIDAR_MINI_HPP
+#endif /// LIDAR_MINI_HPP
