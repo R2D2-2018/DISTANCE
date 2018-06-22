@@ -8,25 +8,33 @@
  * @license   MIT
  */
 
-Distance::Distance(LIDARmini *lidar) : lidar(lidar), ultrasonic(nullptr) {
+Distance::Distance(LIDARmini &lidar, HCSR04 &ultrasonic)
+    : lidar(lidar), ultrasonic(ultrasonic), unit(Scale::CENTIMETERS), sensorType(SensorType::AUTOMATIC), filter(Filter::KALMAN) {
 }
 
-Distance::Distance(HCSR04 *ultrasonic) : lidar(nullptr), ultrasonic(ultrasonic) {
-}
-
-Distance::Distance(LIDARmini *lidar, HCSR04 *ultrasonic) : lidar(lidar), ultrasonic(ultrasonic) {
-}
-
-int Distance::getDistance(Distance::SensorType sensorType, Distance::Scale scale) {
-    if (sensorType == SensorType::LIDAR && lidar != nullptr) {
-        return lidar->getDistance();
-    } else if (sensorType == SensorType::ULTRASONIC && ultrasonic != nullptr) {
-        return ultrasonic->getDistance();
-    } else if (sensorType == SensorType::AUTOMATIC && lidar != nullptr && ultrasonic != nullptr) {
-        int lidar_distance = lidar->getDistance();
-        return lidar_distance > 35 ? lidar_distance : ultrasonic->getDistance();
+int Distance::getDistance() {
+    if (sensorType == SensorType::LIDAR) {
+        return lidar.getDistance();
+    } else if (sensorType == SensorType::ULTRASONIC) {
+        return ultrasonic.getDistance();
+    } else if (sensorType == SensorType::AUTOMATIC) {
+        int lidar_distance = lidar.getDistance();
+        return lidar_distance > 35 ? lidar_distance : ultrasonic.getDistance();
     }
-    return 1234;
+
+    return -1;
+}
+
+void Distance::setSensor(const Distance::SensorType sensorType) {
+    this->sensorType = sensorType;
+}
+
+void Distance::setUnit(const Distance::Scale unit) {
+    this->unit = unit;
+}
+
+void Distance::setFilter(const Distance::Filter filter, const int size) {
+    this->filter = filter;
 }
 
 int Distance::convertToInches(int centimeters) {

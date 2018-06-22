@@ -16,8 +16,8 @@
  */
 class HCSR04 {
   private:
-    hwlib::target::pin_out trigger_pin;
-    hwlib::target::pin_in echo_pin;
+    hwlib::pin_out &trigger_pin;
+    hwlib::pin_in &echo_pin;
 
   public:
     /**
@@ -25,7 +25,7 @@ class HCSR04 {
      * @param trigger_pin       Pin to send the pulse on
      * @param echo_pin          Pin to listen for the reflection on
      */
-    explicit HCSR04(hwlib::target::pin_out &trigger_pin, hwlib::target::pin_in &echo_pin);
+    explicit HCSR04(hwlib::pin_out &trigger_pin, hwlib::pin_in &echo_pin);
 
     /**
      * @brief
@@ -40,4 +40,4 @@ class HCSR04 {
     int getDistance();
 };
 
-#endif // HCSR04_HPP
+#endif ///< HCSR04_HPP
