@@ -8,34 +8,26 @@
  * @license   MIT
  */
 
-HCSR04::HCSR04(hwlib::target::pin_out &trigger_pin, hwlib::target::pin_in &echo_pin)
-    : trigger_pin(trigger_pin), echo_pin(echo_pin) {
+HCSR04::HCSR04(hwlib::pin_out &trigger_pin, hwlib::pin_in &echo_pin) : trigger_pin(trigger_pin), echo_pin(echo_pin) {
 }
 
 int HCSR04::getDistance() {
     trigger_pin.set(0);
-    hwlib::wait_ms(2);
     trigger_pin.set(1);
-    hwlib::wait_ms(10);
+    hwlib::wait_us(10);
     trigger_pin.set(0);
-
-    // Receive pulse
-    bool received = echo_pin.get();
-
-    // Get current time
-    int duration = (int)hwlib::now_us();
-
-    while (!received) {
-        received = echo_pin.get();
+    ///< Wait for first signal from echo pin
+    while (!echo_pin.get()) {
     }
-    while (received) {
-        received = echo_pin.get();
+    ///< Get current time
+    long long int duration = hwlib::now_us();
+    ///< While the first pulse has just occurred, keep on looping until echo_pin returns false.
+    while (echo_pin.get()) {
     }
+    ///< Calculate distance by calculating the delta duration
+    duration = hwlib::now_us() - duration;
+    int distance = duration / 58;
 
-    // Calculate distance
-    duration = (int)((hwlib::now_us() - duration) - 400);
-    int distance = (int)((duration / 2) / 29.1);
-
-    // Return distance, when it exceeds it's maximum range; it returns 400.
+    ///< Return distance, when it exceeds its maximum range; it returns 400.
     return distance < 400 ? distance : 400;
 }
