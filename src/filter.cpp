@@ -29,5 +29,5 @@ int Average::get(CyclicQueue<int, 10> values) {
     for (int i = 0; i < values.getCount(); i++) {
         sum += values[i];
     }
-    return round((float)sum / values.getCount());
+    return round(sum / values.getCount());
 }

@@ -5,6 +5,7 @@
 
 /**
  * @brief Cyclic Queue
+ *
  * @details
  * This container holds values in a C-style array.
  * The array loops back on itself to allow a cyclic pattern.
@@ -77,6 +78,7 @@ class CyclicQueue {
      * @description
      * Allows array-style access to the queue.
      * The queue is counted from the head and looped around accordingly.
+     *
      * @param[in] T other The index of the container value we wish to get
      * @return T Requested value in the container
      */
@@ -91,6 +93,7 @@ class CyclicQueue {
      *
      * @description
      * Enqueues the given value into the queue.
+     *
      * @param[in] T &value The value we wish to enqueue
      */
     void enqueue(const T &value) {
@@ -101,7 +104,8 @@ class CyclicQueue {
      * @brief Pop
      *
      * @description
-     * Pops the last added element from the container
+     * Pops the last added element from the container.
+     *
      * @return T The last added value
      */
     T pop() {
@@ -115,6 +119,7 @@ class CyclicQueue {
      * @description
      * Dequeues the first element from the queue.
      * This is the value currently at head.
+     *
      * @return T The value we wish to dequeue.
      */
     T dequeue() {
@@ -127,6 +132,7 @@ class CyclicQueue {
      *
      * @description
      * Returns the next item to be dequeued without actually dequeueing it.
+     *
      * @return T The value we wish to peak.
      */
     T peakNext() {
@@ -137,6 +143,7 @@ class CyclicQueue {
      *
      * @description
      * Returns the next item to be popped without actually popping it.
+     *
      * @return T The value we wish to peak.
      */
     T peakNewest() {
@@ -148,6 +155,7 @@ class CyclicQueue {
      *
      * @description
      * Returns the amount of items in the container.
+     *
      * @return int The amount of items in the queue.
      */
     int getCount() {
