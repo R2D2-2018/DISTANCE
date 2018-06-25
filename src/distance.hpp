@@ -1,6 +1,7 @@
 #ifndef DISTANCE_HPP
 #define DISTANCE_HPP
 #include "HCSR04.hpp"
+#include "filter.hpp"
 #include "lidar_mini.hpp"
 #include "wrap-hwlib.hpp"
 
@@ -18,44 +19,64 @@
  */
 class Distance {
   private:
-    LIDARmini *lidar;
-    HCSR04 *ultrasonic;
+    LIDARmini &lidar;
+    HCSR04 &ultrasonic;
+
+    CyclicQueue<int, 10> values;
 
   public:
     enum class Scale { CENTIMETERS, INCHES };
     enum class SensorType { AUTOMATIC, LIDAR, ULTRASONIC };
-    /**
-     * @brief Distance constructor for the TF mini LiDAR distance sensor
-     *
-     * @param[in]     LIDARmini     LIDARmini object
-     */
-    explicit Distance(LIDARmini *lidar);
+    Average average = Average();
+    Median median = Median();
 
-    /**
-     * @brief Distance constructor for the HCSR04 Ultrasonic distance sensor
-     *
-     * @param[in]     HCSR04     HCSR04 object
-     */
-    explicit Distance(HCSR04 *ultrasonic);
+  private:
+    Scale unit;
+    SensorType sensorType;
+    Filter &filter;
 
-    /**
-     * @brief Distance constructor for the TF mini LiDAR and HCSR04 Ultrasonic distance sensors
-     *
-     * @param[in]     LIDARmini     LIDARmini object
-     * @param[in]     HCSR04        HCSR04 object
-     */
-    Distance(LIDARmini *lidar, HCSR04 *ultrasonic);
+  public:
+    Distance(LIDARmini &lidarm, HCSR04 &ultrasonic);
 
     /**
      * @brief Get distance in centimeters
      *
+     * @details
      * Returns the distance to an object in centimeters
      *
-     * @param[in]     Distance::SensorType  The sensor that should be used
-     * @param[in]     Distance::Scale       The scale in which the distance has to be returned
      * @return        distance
      */
-    int getDistance(Distance::SensorType sensorType, Distance::Scale scale);
+    int getDistance();
+
+    /**
+     * @brief Sets the sensor attribute to sensorType
+     *
+     * @details
+     * Sets the sensor specifier to the sensor specified in the parameter.
+     *
+     * @param [in]sensorType
+     */
+    void setSensor(const SensorType sensorType);
+
+    /**
+     * @brief Does nothing
+     *
+     * @details
+     * Does nothing
+     *
+     * @param[in] unit
+     */
+    void setUnit(const Scale unit);
+
+    /**
+     * @brief Does nothing
+     *
+     * @details
+     * Does nothing
+     *
+     * @param[in] filter Filter type
+     */
+    void setFilter(const Filter &filter);
 
     /**
      * @brief Converts centimeters to inches
@@ -63,10 +84,9 @@ class Distance {
      * Converts a given centimeter value to inches
      *
      * @param[in]     int                   Centimeters to convert
-     * @param[in]     Distance::Scale       The scale in which the distance has to be returned
-     * @return        inches
+     * @return        int                   Calculated inches
      */
-    int convertToInches(int centimeters);
+    static int convertToInches(int centimeters);
 };
 
-#endif // DISTANCE_HPP
+#endif ///< DISTANCE_HPP
