@@ -87,11 +87,13 @@ TEST_CASE("FIR::get()", "[FIR]") {
     REQUIRE(fir.get(values) == 13);
     ///< Testing a different filter.
     FIR<-1, -1, 4, -1, -1> fir2 = FIR<-1, -1, 4, -1, -1>();
-    values = {1, 2, 3, 4, 5, 10, 2};
-    REQUIRE(fir2.get(values) == 0);
-    values.dequeue();
+    CyclicQueue<int, 10> values2 = {1, 2, 3, 4, 5, 10, 2};
+    REQUIRE(fir2.get(values2) == 0);
+    values2.dequeue();
     ///< Applying <-1, -1, 4, -1, -1> on {2, 3, 4, 5, 10} should result in the value -4.
-    REQUIRE(fir2.get(values) == -4);
+    REQUIRE(fir2.get(values2) == -4);
+    values2.dequeue();
+    REQUIRE(fir2.get(values2) == 1);
 }
 
 #endif ///< FILTER_TEST_HPP
