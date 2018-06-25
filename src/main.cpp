@@ -17,8 +17,9 @@ int main() {
 
     Distance d = Distance(lidar, ultrasonic);
     d.setSensor(Distance::SensorType::ULTRASONIC);
+    d.setFilter(d.average);
     while (1) {
         hwlib::cout << d.getDistance() << "\r\n";
-        hwlib::wait_ms(1000);
+        hwlib::wait_ms(100);
     }
 }

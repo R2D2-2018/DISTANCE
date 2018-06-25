@@ -9,20 +9,24 @@
  */
 
 Distance::Distance(LIDARmini &lidar, HCSR04 &ultrasonic)
-    : lidar(lidar), ultrasonic(ultrasonic), unit(Scale::CENTIMETERS), sensorType(SensorType::AUTOMATIC), filter(Filter::KALMAN) {
+    : lidar(lidar), ultrasonic(ultrasonic), unit(Scale::CENTIMETERS), sensorType(SensorType::AUTOMATIC), filter(average) {
 }
 
 int Distance::getDistance() {
+    int distance = -1;
     if (sensorType == SensorType::LIDAR) {
-        return lidar.getDistance();
+        distance = lidar.getDistance();
     } else if (sensorType == SensorType::ULTRASONIC) {
-        return ultrasonic.getDistance();
+        distance = ultrasonic.getDistance();
     } else if (sensorType == SensorType::AUTOMATIC) {
-        int lidar_distance = lidar.getDistance();
-        return lidar_distance > 35 ? lidar_distance : ultrasonic.getDistance();
+        int ultrasonic_distance = ultrasonic.getDistance();
+        distance = (ultrasonic_distance <= 30 ? ultrasonic_distance : lidar.getDistance());
     }
-
-    return -1;
+    values.enqueue(distance);
+    int filtered_distance = filter.get(values);
+    values.pop();
+    values.enqueue(filtered_distance);
+    return filtered_distance;
 }
 
 void Distance::setSensor(const Distance::SensorType sensorType) {
@@ -33,7 +37,7 @@ void Distance::setUnit(const Distance::Scale unit) {
     this->unit = unit;
 }
 
-void Distance::setFilter(const Distance::Filter filter, const int size) {
+void Distance::setFilter(const Filter &filter) {
     this->filter = filter;
 }
 
