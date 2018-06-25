@@ -2,6 +2,7 @@
 #define CYCLIC_QUEUE_HPP
 
 #include <initializer_list>
+
 /**
  * @brief Cyclic Queue
  * @details
@@ -17,12 +18,10 @@ class CyclicQueue {
     T values[size];
     int count = 0;
     /**
-     * @brief
-     * Increment tail pointer
+     * @brief Increment tail pointer
      *
      * @description
      * Increments the tail pointer or loops it around. If the head is replaced, increment head.
-     * @return void
      */
     void incrementTail() {
         if (tail == end) {
@@ -36,12 +35,10 @@ class CyclicQueue {
         }
     }
     /**
-     * @brief
-     * Increment head pointer
+     * @brief Increment head pointer
      *
      * @description
      * Increments the tail pointer or loops it around.
-     * @return void
      */
     void incrementHead() {
         if (head == end) {
@@ -52,12 +49,10 @@ class CyclicQueue {
         count--;
     }
     /**
-     * @brief
-     * Decrement tail pointer
+     * @brief Decrement tail pointer
      *
      * @description
      * Decrements the tail pointer or loops it around.
-     * @return void
      */
     void decrementTail() {
         if (tail == start) {
@@ -77,8 +72,7 @@ class CyclicQueue {
     CyclicQueue() : start(values), end(values + size - 1), head(start), tail(end) {
     }
     /**
-     * @brief
-     * Square bracket operator
+     * @brief Square bracket operator
      *
      * @description
      * Allows array-style access to the queue.
@@ -93,38 +87,30 @@ class CyclicQueue {
         return head[other];
     }
     /**
-     * @brief
-     * Enqueue
+     * @brief Enqueue
      *
      * @description
      * Enqueues the given value into the queue.
      * @param[in] T &value The value we wish to enqueue
-     * @return void
      */
     void enqueue(const T &value) {
         incrementTail();
         *tail = value;
     }
     /**
-     * @brief
-     * Pop
+     * @brief Pop
      *
      * @description
      * Pops the last added element from the container
      * @return T The last added value
      */
     T pop() {
-        if (count > 0) {
-            T return_value = *tail;
-            decrementTail();
-            return return_value;
-        } else {
-            return -1;
-        }
+        T return_value = *tail;
+        decrementTail();
+        return return_value;
     }
     /**
-     * @brief
-     * Dequeue
+     * @brief Dequeue
      *
      * @description
      * Dequeues the first element from the queue.
@@ -132,17 +118,12 @@ class CyclicQueue {
      * @return T The value we wish to dequeue.
      */
     T dequeue() {
-        if (count > 0) {
-            T return_value = *head;
-            incrementHead();
-            return return_value;
-        } else {
-            return -1;
-        }
+        T return_value = *head;
+        incrementHead();
+        return return_value;
     }
     /**
-     * @brief
-     * peakNext
+     * @brief peakNext
      *
      * @description
      * Returns the next item to be dequeued without actually dequeueing it.
@@ -152,8 +133,7 @@ class CyclicQueue {
         return *head;
     }
     /**
-     * @brief
-     * peakNewest
+     * @brief peakNewest
      *
      * @description
      * Returns the next item to be popped without actually popping it.

@@ -4,6 +4,7 @@
 #include "cyclic_queue.hpp"
 #include "wrap-hwlib.hpp"
 #include <array>
+#include <math.h>
 
 /**
  * @file      filter.hpp
