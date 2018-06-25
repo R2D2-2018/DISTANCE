@@ -1,6 +1,7 @@
 #ifndef DISTANCE_HPP
 #define DISTANCE_HPP
 #include "HCSR04.hpp"
+#include "filter.hpp"
 #include "lidar_mini.hpp"
 #include "wrap-hwlib.hpp"
 
@@ -21,15 +22,18 @@ class Distance {
     LIDARmini &lidar;
     HCSR04 &ultrasonic;
 
+    CyclicQueue<int, 10> values;
+
   public:
     enum class Scale { CENTIMETERS, INCHES };
     enum class SensorType { AUTOMATIC, LIDAR, ULTRASONIC };
-    enum class Filter { KALMAN, MEDIAN };
+    Average average = Average();
+    Median median = Median();
 
   private:
     Scale unit;
     SensorType sensorType;
-    Filter filter;
+    Filter &filter;
 
   public:
     Distance(LIDARmini &lidarm, HCSR04 &ultrasonic);
@@ -71,9 +75,8 @@ class Distance {
      * Does nothing
      *
      * @param[in] filter Filter type
-     * @param[in] size Size of the filter
      */
-    void setFilter(const Filter filter, const int size);
+    void setFilter(const Filter &filter);
 
     /**
      * @brief Converts centimeters to inches
