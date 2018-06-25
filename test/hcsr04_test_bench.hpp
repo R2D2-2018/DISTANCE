@@ -168,8 +168,7 @@ class HCSR04TestBench {
      * @param v High/low value from hwlib::pin_out binding
      */
     static void triggerRoutine(HCSR04TestBench *self, bool v) {
-        if (v == true && self->lastTriggerLevel == false) {
-            self->lastTriggerLevel = true;
+        if (v == true) {
             self->lastTriggerTime = hwlib::now_us();
         } else if (self->lastTriggerLevel == true) {
             self->lastTriggerLevel = false;
@@ -186,30 +185,28 @@ class HCSR04TestBench {
  */
 TEST_CASE("Test HCSR04TestBench Blast Time") {
 
-    HCSR04TestBench testBench = {10000};
+    unsigned int blastTime = 10000; ///< 10 ms
+    HCSR04TestBench testBench = {blastTime};
 
-    long long int signalTime = 10000; ///< 10 ms
+    long long int elapsedTime = 0;
 
     hwlib::pin_in &echoPin = testBench.getEchoPin();
     hwlib::pin_out &triggerPin = testBench.getTriggerPin();
     triggerPin.set(false);
-    hwlib::wait_ms(1);
-
     triggerPin.set(true);
-    hwlib::wait_us(signalTime);
+    hwlib::wait_us(10);
     triggerPin.set(false);
     while (!echoPin.get()) {
     }
     long long int startTime = hwlib::now_us();
-    long long int elapsedTime = 0;
     ///< After this while loop, echoPin.get() returns true.
     ///< While-loop until echoPin.get() returns false
     while (echoPin.get()) {
     }
     elapsedTime = hwlib::now_us() - startTime;
-    ///< We allow the elapsed time to be off by a maximum of one millisecond.
-    REQUIRE(elapsedTime >= signalTime - 1000);
-    REQUIRE(elapsedTime <= signalTime + 1000);
+    ///< We allow the elapsed time to be off by a maximum of one microsecond.
+    REQUIRE(elapsedTime >= blastTime - 1);
+    REQUIRE(elapsedTime <= blastTime + 1);
 }
 
 #endif ///< HCSR04_TEST_BENCH_HPP
