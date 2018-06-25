@@ -8,23 +8,26 @@
  * @license   MIT
  */
 
-int Median::get(int *values, const int size) {
-    /// Sort the array before finding middle value(s)
-    int j, temp;
-    for (int i = 0; i < size; i++) {
-        j = i;
+int Median::get(CyclicQueue<int, 10> values) {
+    ///< Sort the array before finding middle value(s)
+    for (int i = 0; i < values.getCount(); i++) {
+        int j = i;
         while (j > 0 && values[j] < values[j - 1]) {
-            temp = values[j];
+            int temp = values[j];
             values[j] = values[j - 1];
             values[j - 1] = temp;
             j--;
         }
     }
-    /// If the size of the array is uneven, return the middle value. Else return the average of the two middle values.
-    return (size % 2) ? values[size / 2] : (values[size / 2 - 1] + values[size / 2]) / 2;
+    ///< If the values.getCount() of the array is uneven, return the middle value. Else return the average of the two middle values.
+    return (values.getCount() % 2) ? values[values.getCount() / 2]
+                                   : (values[values.getCount() / 2 - 1] + values[values.getCount() / 2]) / 2;
 }
 
-int Kalman::get(int *values, const int size) {
-    /// Dummy functionality, returns first value in array:
-    return values[0];
+int Average::get(CyclicQueue<int, 10> values) {
+    int sum = 0;
+    for (int i = 0; i < values.getCount(); i++) {
+        sum += values[i];
+    }
+    return sum / values.getCount();
 }
