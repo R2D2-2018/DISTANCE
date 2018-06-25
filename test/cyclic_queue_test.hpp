@@ -44,8 +44,6 @@ TEST_CASE("Cyclic queue test") {
         for (int i = 1; i < 5; i++) {
             REQUIRE(cq.dequeue() == i);
         }
-        ///< Dequeueing should not be possible
-        REQUIRE_FALSE(cq.dequeue() == 5);
     }
 
     SECTION("Square bracket operator") {
