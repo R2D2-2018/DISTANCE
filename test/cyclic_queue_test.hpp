@@ -28,7 +28,7 @@ TEST_CASE("Cyclic queue test") {
     }
 }
 
-TEST_CASE("Cyclic queue test") {
+TEST_CASE("Cyclic queue test part 2") {
     CyclicQueue<int, 5> cq = CyclicQueue<int, 5>();
     SECTION("Filling up beyond max size and emptying out (testing cyclicity)") {
         for (int i = 0; i < 6; i++) {
