@@ -11,13 +11,13 @@
  * The array loops back on itself to allow a cyclic pattern.
  * The array can be accessed as a queue but can also pop the latest addition out.
  */
-template <typename T, int size>
+template <typename T, uint32_t size>
 class CyclicQueue {
   private:
     T *start, *end;
     T *head, *tail;
     T values[size];
-    int count = 0;
+    uint32_t count = 0;
     /**
      * @brief Increment tail pointer
      *
@@ -66,7 +66,7 @@ class CyclicQueue {
 
   public:
     CyclicQueue(std::initializer_list<T> init) : start(values), end(values + size - 1), head(start), tail(end) {
-        for (int value : init) {
+        for (T value : init) {
             enqueue(value);
         }
     }
@@ -82,7 +82,7 @@ class CyclicQueue {
      * @param[in] T other The index of the container value we wish to get
      * @return T Requested value in the container
      */
-    T &operator[](T other) {
+    T &operator[](T other) const {
         while (head + other > end) {
             other -= size;
         }
@@ -135,7 +135,7 @@ class CyclicQueue {
      *
      * @return T The value we wish to peak.
      */
-    T peakNext() {
+    const T peakNext() {
         return *head;
     }
     /**
@@ -156,9 +156,9 @@ class CyclicQueue {
      * @description
      * Returns the amount of items in the container.
      *
-     * @return int The amount of items in the queue.
+     * @return uint32_t The amount of items in the queue.
      */
-    int getCount() {
+    const uint32_t getCount() {
         return count;
     }
 };
