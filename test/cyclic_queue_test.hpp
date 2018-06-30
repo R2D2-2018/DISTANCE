@@ -27,7 +27,9 @@ TEST_CASE("Cyclic queue test") {
         }
     }
 }
-TEST_CASE("Cyclic queue test part 2") {
+
+TEST_CASE("Cyclic queue test") {
+    CyclicQueue<int, 5> cq = CyclicQueue<int, 5>();
     SECTION("Filling up beyond max size and emptying out (testing cyclicity)") {
         for (int i = 0; i < 6; i++) {
             cq.enqueue(i);
@@ -48,7 +50,9 @@ TEST_CASE("Cyclic queue test part 2") {
         }
     }
 }
+
 TEST_CASE("Operator tests") {
+    CyclicQueue<int, 5> cq = CyclicQueue<int, 5>();
     SECTION("Square bracket operator") {
         for (int i = 0; i < 5; i++) {
             cq.enqueue(i);
