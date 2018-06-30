@@ -2,6 +2,7 @@
 #define CYCLIC_QUEUE_HPP
 
 #include <initializer_list>
+#include <stdint.h>
 
 /**
  * @brief Cyclic Queue
@@ -156,7 +157,7 @@ class CyclicQueue {
      * @description
      * Returns the amount of items in the container.
      *
-     * @return uint32_t The amount of items in the queue.
+     * @return int The amount of items in the queue.
      */
     const uint32_t getCount() {
         return count;
