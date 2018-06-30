@@ -18,7 +18,7 @@ class CyclicQueue {
     T *start, *end;
     T *head, *tail;
     T values[size];
-    uint32_t count = 0;
+    int count = 0;
     /**
      * @brief Increment tail pointer
      *
@@ -159,7 +159,7 @@ class CyclicQueue {
      *
      * @return int The amount of items in the queue.
      */
-    const uint32_t getCount() {
+    const int getCount() {
         return count;
     }
 };
