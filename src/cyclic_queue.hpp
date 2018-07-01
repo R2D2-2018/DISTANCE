@@ -18,7 +18,7 @@ class CyclicQueue {
     T *start, *end;
     T *head, *tail;
     T values[size];
-    int count = 0;
+    uint32_t count = 0;
     /**
      * @brief Increment tail pointer
      *
@@ -136,7 +136,7 @@ class CyclicQueue {
      *
      * @return T The value we wish to peak.
      */
-    const T peakNext() {
+    T peakNext() const {
         return *head;
     }
     /**
@@ -159,7 +159,7 @@ class CyclicQueue {
      *
      * @return int The amount of items in the queue.
      */
-    const int getCount() {
+    uint32_t getCount() const {
         return count;
     }
 };
